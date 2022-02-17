@@ -35,6 +35,7 @@ public class ThirdPersonControl : MonoBehaviour
     private float crouchHeight;
     private float crouchTimer;
     private bool crouching;
+    private bool crouched;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce = 220;
@@ -75,6 +76,14 @@ public class ThirdPersonControl : MonoBehaviour
     [Header("Animation")]
     [SerializeField] Animator anim;
     float moveAdd = 0;
+    // animator parameter hashes
+    int animMoveSpeedHash;
+    int animYVelocityHash;
+    int animisGroundedHash;
+    int animJumpingHash;
+    int animSlidingHash;
+    int animSlideAnimationHash;
+
 
     void Awake()
     {
@@ -107,7 +116,11 @@ public class ThirdPersonControl : MonoBehaviour
         cameraLookSpeed = CameraSensitivityX / 10;
         cameraPivotSpeed = CameraSensitivityY / 10;
 
-        if (enableAnim) anim = GetComponentInChildren<Animator>();
+        if (enableAnim)
+        {
+            anim = GetComponentInChildren<Animator>();
+            SetAnimHashes();
+        }
     }
 
 
@@ -162,6 +175,7 @@ public class ThirdPersonControl : MonoBehaviour
         if (grounded) // only check for speed change when on floor
         {
             if (!isSprinting()) targetMoveAmount = moveDIR * walkSpeed;
+            else if (crouching) targetMoveAmount = moveDIR * (walkSpeed / sprintMultiplier);
             else targetMoveAmount = moveDIR * (walkSpeed * sprintMultiplier);
         }
         else
@@ -251,7 +265,7 @@ public class ThirdPersonControl : MonoBehaviour
             crouchTimer = 0;
             ApplyCrouch();
         }
-        else if (crouchTimer > 3 && Input.GetButtonUp(crouchA) || Input.GetButtonUp(crouchB))
+        else if (crouchTimer > 3 && Input.GetButtonUp(crouchA) || crouchTimer > 3 && Input.GetButtonUp(crouchB))
         {
             ApplyCrouch();
         }
@@ -265,7 +279,8 @@ public class ThirdPersonControl : MonoBehaviour
     }
     void ApplyCrouch() //applies crouch movement
     {
-        crouching = !crouching;
+        if (crouched) crouched = false;
+        else crouching = !crouching;
 
         if (!enableAnim)
         {
@@ -330,9 +345,11 @@ public class ThirdPersonControl : MonoBehaviour
         if (Input.GetButton(sprintA) || Input.GetButton(sprintB))
         {
             sprintOn = true;
+
+            //if (crouching || crouched) ApplyCrouch();
+
             return true;
         }
-
         else
         {
             sprintOn = false;
@@ -345,18 +362,26 @@ public class ThirdPersonControl : MonoBehaviour
         if (Physics.SphereCast(transform.position, pCollider.radius, -transform.up, out RaycastHit Hit, 1 + .1f, groundedMask)) return true;
         else
         {
-            crouching = false;
+            crouched = false;
             return false;
         }
     }
 
     #region ANIMATION
+    void SetAnimHashes()
+    {
+        animMoveSpeedHash = Animator.StringToHash("MoveSpeed");
+        animYVelocityHash = Animator.StringToHash("Y Velocity");
+        animisGroundedHash = Animator.StringToHash("isGrounded");
+        animJumpingHash = Animator.StringToHash("jumping");
+    }
+
     void AnimationSetVars()
     {
         if (!enableAnim) return;
 
-        anim.SetBool("isGrounded", grounded);
-        anim.SetFloat("Y Velocity", rb.velocity.y);
+        anim.SetBool(animisGroundedHash, grounded);
+        anim.SetFloat(animYVelocityHash, rb.velocity.y);
     }
 
     void AnimationSprintBlend(float movement)
@@ -368,8 +393,6 @@ public class ThirdPersonControl : MonoBehaviour
             if (sprintOn)
             {
                 if (moveAdd < 2) moveAdd += 0.1f;
-
-                if (crouching) ApplyCrouch();
             }
             else
             {   
@@ -388,18 +411,18 @@ public class ThirdPersonControl : MonoBehaviour
             }
         }
 
-        anim.SetFloat("MoveSpeed", moveAdd);
-        if (moveAdd > -0.1f && moveAdd < 0.05f)
+        anim.SetFloat(animMoveSpeedHash, moveAdd);
+        if (moveAdd > -0.2f && moveAdd < 0.05f)
         {
-            anim.SetFloat("MoveSpeed", 0);
+            anim.SetFloat(animMoveSpeedHash, 0);
         }
         else if (moveAdd > 0.95f && moveAdd < 1.1f)
         {
-            anim.SetFloat("MoveSpeed", 1);
+            anim.SetFloat(animMoveSpeedHash, 1);
         }
         else if (moveAdd > 1.95f && moveAdd < 2.1f)
         {
-            anim.SetFloat("MoveSpeed", 2);
+            anim.SetFloat(animMoveSpeedHash, 2);
         }
     }
 
@@ -407,15 +430,24 @@ public class ThirdPersonControl : MonoBehaviour
     {
         float layerWeight = anim.GetLayerWeight(1);
         float incrementAmount = 0.05f;
-        if (crouching)
+        if (crouching || crouched)
         {
             if (layerWeight < 1)
             {
                 anim.SetLayerWeight(1, layerWeight + incrementAmount);
             }
+            else
+            {
+                if (crouching && !crouched)
+                {
+                    crouching = false;
+                    crouched = true;
+                }
+            }
         }
         else
         {
+            crouched = false;
             if (layerWeight > 0)
             {
                 anim.SetLayerWeight(1, layerWeight - incrementAmount);
@@ -427,8 +459,7 @@ public class ThirdPersonControl : MonoBehaviour
     {
         if (!enableAnim) return;
 
-        //anim.SetBool("jumping", true);
-        anim.SetTrigger("jumping 0");
+        anim.SetTrigger(animJumpingHash);
 
         if (crouching)
         {

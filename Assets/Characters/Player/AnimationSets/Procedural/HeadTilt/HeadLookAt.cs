@@ -7,14 +7,21 @@ public class HeadLookAt : MonoBehaviour
     Animator anim;
 
     [Range(0.0f, 1.0f)]
-    public float targetLookAtWeight = 1;
+    [SerializeField] float targetLookAtWeight = 1;
+    [SerializeField] bool useDistanceFromTarget;
+    private float maxDistanceFromTarget = 10;
     private float currentLookAtWeight = 0;
-    public bool ikActive = true;
-    public Transform lookObj;
+    [SerializeField] bool ikActive = true;
+    [SerializeField] Transform lookObj;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
+
+        if (lookObj = null)
+        {
+            ikActive = false;
+        }
     }
 
     private void OnAnimatorIK(int layerIndex)
@@ -23,9 +30,27 @@ public class HeadLookAt : MonoBehaviour
         {
             if (lookObj != null)
             {
+                if (currentLookAtWeight > targetLookAtWeight)
+                {
+                    currentLookAtWeight = targetLookAtWeight;
+                }
+
                 if (currentLookAtWeight < targetLookAtWeight)
                 {
-                    currentLookAtWeight += 0.0075f;
+                    if (useDistanceFromTarget)
+                    {
+                        float currentDistanceFromTarget = Vector3.Distance(transform.position, lookObj.position);
+                        if (currentDistanceFromTarget < maxDistanceFromTarget)
+                        {
+                            currentLookAtWeight = currentDistanceFromTarget / maxDistanceFromTarget;
+                        }
+                        else
+                        {
+                            currentLookAtWeight = 0;
+                        }
+                    }
+                    else currentLookAtWeight += 0.0075f;
+
                 }
                 anim.SetLookAtWeight(currentLookAtWeight);
                 anim.SetLookAtPosition(lookObj.position);
@@ -45,10 +70,14 @@ public class HeadLookAt : MonoBehaviour
         }
     }
 
-    public void SetNewLookAt(Transform obj, float strength)
+    public void SetNewLookAt(Transform obj, float strength, bool distanceBased = false, float maxDistance = 10)
     {
+        ikActive = true;
         lookObj = obj;
         targetLookAtWeight = Mathf.Clamp01(strength);
+
+        useDistanceFromTarget = distanceBased;
+        maxDistanceFromTarget = maxDistance;
     }
 
     public void EnableHeadIK()

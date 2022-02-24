@@ -33,6 +33,7 @@ public class ThirdPersonControl : MonoBehaviour
     private Vector3 moveAmount;
     private Vector3 smoothMoveVelocity;
     ////crouching
+    private int crouchLayerID;
     private float standHeight;
     private float crouchHeight;
     private float crouchTimer;
@@ -118,7 +119,23 @@ public class ThirdPersonControl : MonoBehaviour
         if (enableAnim)
         {
             anim = GetComponentInChildren<Animator>();
-            SetAnimHashes();
+            if (anim != null)
+            {
+                SetAnimHashes();
+                for (int i = 0; i < anim.layerCount; i++)
+                {
+                    if (anim.GetLayerName(i) == "Crouch Layer")
+                    {
+                        crouchLayerID = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("Animation Enabled with no attatched animator!");
+            }
+
         }
     }
 
@@ -239,13 +256,14 @@ public class ThirdPersonControl : MonoBehaviour
             rot.x = pivotAngle;
             targetRot = Quaternion.Euler(rot);
             cameraPivot.localRotation = targetRot;
+            CameraCollisions();
         }
-        CameraCollisions();
     }
 
     private void CameraCollisions()
     {
         float targetPos = defaultPos;
+        float offsetSpeed = 0.01f;
         RaycastHit hit;
         Vector3 direction = cameraTransform.position - cameraPivot.position;
         direction.Normalize();
@@ -254,6 +272,7 @@ public class ThirdPersonControl : MonoBehaviour
         {
             float distance = Vector3.Distance(cameraPivot.position, hit.point);
             targetPos =- (distance - cameraCollisionOffset);
+            offsetSpeed = 0.2f;
         }
 
         if (Mathf.Abs(targetPos) > minCollisionOffset)
@@ -261,7 +280,7 @@ public class ThirdPersonControl : MonoBehaviour
             targetPos = targetPos - minCollisionOffset;
         }
 
-        cameraVectorPos.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPos, 0.2f);
+        cameraVectorPos.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPos, offsetSpeed);
         cameraTransform.localPosition = cameraVectorPos;
     }
     #endregion
@@ -470,13 +489,13 @@ public class ThirdPersonControl : MonoBehaviour
 
     void AnimationCrouchBlend()
     {
-        float layerWeight = anim.GetLayerWeight(1);
+        float layerWeight = anim.GetLayerWeight(crouchLayerID);
         float incrementAmount = 0.05f;
         if (crouching || crouched)
         {
             if (layerWeight < 1)
             {
-                anim.SetLayerWeight(1, layerWeight + incrementAmount);
+                anim.SetLayerWeight(crouchLayerID, layerWeight + incrementAmount);
             }
             else
             {
@@ -492,7 +511,7 @@ public class ThirdPersonControl : MonoBehaviour
             crouched = false;
             if (layerWeight > 0)
             {
-                anim.SetLayerWeight(1, layerWeight - incrementAmount);
+                anim.SetLayerWeight(crouchLayerID, layerWeight - incrementAmount);
             }
         }
     }
@@ -517,6 +536,17 @@ public class ThirdPersonControl : MonoBehaviour
     }
     #endregion
 
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
     // can be referenced by anything to end game
     public void ExitGame()
     {

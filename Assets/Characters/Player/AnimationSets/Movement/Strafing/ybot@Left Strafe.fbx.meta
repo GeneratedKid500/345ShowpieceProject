@@ -1,14 +1,11 @@
 fileFormatVersion: 2
-guid: fa258e1b85e50b24b96e15ae67006055
+guid: 4d22db36f39c91d40865c6c038394c36
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Sword And Shield Run (1)
-  - first:
-      74: 7917747251892844560
-    second: Sword And Shield Run
+    second: Left Strafe
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -39,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield Run
+      name: Left Strafe
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 42
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

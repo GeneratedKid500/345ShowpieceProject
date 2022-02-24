@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: d16f8db249ca0e64681f5c2f61c6e772
+guid: 54c739f448ac73a49a63b796ee359c43
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Sword And Shield Jump
+    second: Jog Strafe Right
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,18 +36,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield Jump
+      name: Jog Strafe Right
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 50
+      lastFrame: 43
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1

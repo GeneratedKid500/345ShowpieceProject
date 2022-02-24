@@ -7,7 +7,8 @@ public class HeadLookAt : MonoBehaviour
     Animator anim;
 
     [Range(0.0f, 1.0f)]
-    public float lookAtWeight = 1;
+    public float targetLookAtWeight = 1;
+    private float currentLookAtWeight = 0;
     public bool ikActive = true;
     public Transform lookObj;
 
@@ -22,20 +23,32 @@ public class HeadLookAt : MonoBehaviour
         {
             if (lookObj != null)
             {
-                anim.SetLookAtWeight(lookAtWeight);
+                if (currentLookAtWeight < targetLookAtWeight)
+                {
+                    currentLookAtWeight += 0.0075f;
+                }
+                anim.SetLookAtWeight(currentLookAtWeight);
                 anim.SetLookAtPosition(lookObj.position);
             }
         }
         else
         {
-            anim.SetLookAtWeight(0);
+            if (currentLookAtWeight > 0)
+            {
+                currentLookAtWeight -= 0.0075f;
+                if (lookObj != null)
+                {
+                    anim.SetLookAtPosition(lookObj.position);
+                }
+            }
+            anim.SetLookAtWeight(currentLookAtWeight);
         }
     }
 
     public void SetNewLookAt(Transform obj, float strength)
     {
         lookObj = obj;
-        lookAtWeight = Mathf.Clamp01(strength);
+        targetLookAtWeight = Mathf.Clamp01(strength);
     }
 
     public void EnableHeadIK()

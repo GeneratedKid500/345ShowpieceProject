@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 2485207bf81f5a24eb3cadfc60071ce6
+guid: 530dca4ada10ade4b8d9d370aeeca692
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Sword And Shield Walk Forward
+    second: Running Backward
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,18 +36,18 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield Walk Forward
+      name: Running Backward
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 65
+      lastFrame: 38
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1

@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: d3ec98008a366454fa037004f1bc3398
+guid: 296c524c1536df14ab84723ba95fa877
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: Sword And Shield Idle
+    second: Jog Forward
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,11 +36,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield Idle
+      name: Jog Forward
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 152
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

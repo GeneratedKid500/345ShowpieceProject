@@ -6,11 +6,11 @@ public class PlayerManager : MonoBehaviour
 {
     private HeadLookAt hla;
 
-    void Start()
+    void Awake()
     {
         SetNewHLA();
     }
 
-    protected void SetNewHLA(){ hla = GetComponentInChildren<HeadLookAt>(); }
-    public HeadLookAt GetHeadLookAt(){ return hla; }
+    protected void SetNewHLA() { hla = GetComponentInChildren<HeadLookAt>(); }
+    public HeadLookAt GetHeadLookAt() { return hla; }
 }

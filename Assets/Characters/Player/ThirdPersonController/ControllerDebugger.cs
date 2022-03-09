@@ -9,8 +9,13 @@ public class ControllerDebugger : MonoBehaviour
     Vector2 rightStickInput = Vector2.zero;
 
     Vector2 dPadInput = Vector2.zero;
-    [SerializeField] bool dPadOneTouchOneOut;
+    [SerializeField] bool outputDirectionalPadAxis;
     bool leftDown, rightDown, upDown, downDown = false;
+
+    [SerializeField] bool outputStickAxis;
+
+    [SerializeField] bool outputTriggerAxis;
+    bool l2Down, r2Down = false;
 
     bool focused = false;
     float analogL2 = -1;
@@ -23,7 +28,7 @@ public class ControllerDebugger : MonoBehaviour
 
     void Update()
     {
-        if (focused)
+        if (Application.isFocused)
         {
             if (Input.GetButtonDown("Cross"))
             {
@@ -48,6 +53,14 @@ public class ControllerDebugger : MonoBehaviour
             if (Input.GetButtonDown("L1"))
             {
                 if (debugLogMode) Debug.Log("L1");
+            }
+            if (Input.GetButtonDown("R2"))
+            {
+                if (debugLogMode) Debug.Log("R2");
+            }
+            if (Input.GetButtonDown("L2"))
+            {
+                if (debugLogMode) Debug.Log("L2");
             }
             if (Input.GetButtonDown("L3"))
             {
@@ -74,29 +87,64 @@ public class ControllerDebugger : MonoBehaviour
                 if (debugLogMode) Debug.Log("TouchPad");
             }
 
-            leftStickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-            if (Mathf.Abs(leftStickInput.x) > 0 || Mathf.Abs(leftStickInput.y) > 0)
+            if (outputStickAxis)
             {
-                if (debugLogMode) Debug.Log("Left Stick: " + leftStickInput);
-            }
-            rightStickInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
-            if (Mathf.Abs(rightStickInput.x) > 0 || Mathf.Abs(rightStickInput.y) > 0)
-            {
-                if (debugLogMode) Debug.Log("Right Stick: " + rightStickInput);
+                leftStickInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+                if (Mathf.Abs(leftStickInput.x) > 0 || Mathf.Abs(leftStickInput.y) > 0)
+                {
+                    if (debugLogMode) Debug.Log("Left Stick: " + leftStickInput);
+                }
+                rightStickInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+                if (Mathf.Abs(rightStickInput.x) > 0 || Mathf.Abs(rightStickInput.y) > 0)
+                {
+                    if (debugLogMode) Debug.Log("Right Stick: " + rightStickInput);
+                }
             }
 
             DpadInputs();
 
-            analogL2 = Input.GetAxis("L2");
-            if (analogL2 > -1)
+            if (outputTriggerAxis)
             {
-                if (debugLogMode && Application.isFocused) Debug.Log("L2: " + Math.Round(analogL2, 2));
+                analogL2 = Input.GetAxis("L2");
+                if (analogL2 > -1)
+                {
+                    if (debugLogMode && Application.isFocused) Debug.Log("L2: " + Math.Round(analogL2, 2));
+                }
+                analogR2 = Input.GetAxis("R2");
+                if (analogR2 > -1)
+                {
+                    if (debugLogMode && Application.isFocused) Debug.Log("R2: " + Math.Round(analogR2, 2));
+                }
             }
-            analogR2 = Input.GetAxis("R2");
-            if (analogR2 > -1)
+            else
             {
-                if (debugLogMode && Application.isFocused) Debug.Log("R2: " + Math.Round(analogR2, 2));
+                if (Input.GetButton("L2"))
+                {
+                    if (!l2Down)
+                    {
+                        if (debugLogMode) Debug.Log("L2");
+                        l2Down = true;
+                    }
+                }
+                else
+                {
+                    l2Down = false;
+                }
+
+                if (Input.GetButton("R2"))
+                {
+                    if (!r2Down)
+                    {
+                        if (debugLogMode) Debug.Log("R2");
+                        r2Down = true;
+                    }
+                }
+                else
+                {
+                    r2Down = false;
+                }
             }
+
         }
     }
 
@@ -105,9 +153,9 @@ public class ControllerDebugger : MonoBehaviour
         dPadInput = new Vector2(Input.GetAxis("Dpad X"), Input.GetAxis("Dpad Y"));
         if (dPadInput.y > 0)
         {
-            if (!dPadOneTouchOneOut)
+            if (outputDirectionalPadAxis)
             {
-                if (debugLogMode) Debug.Log("Dpad Up");
+                if (debugLogMode) Debug.Log("Dpad Y: " + Math.Round(dPadInput.y, 2));
             }
             else
             {
@@ -122,9 +170,9 @@ public class ControllerDebugger : MonoBehaviour
         }
         else if (dPadInput.y < 0)
         {
-            if (!dPadOneTouchOneOut)
+            if (outputDirectionalPadAxis)
             {
-                if (debugLogMode) Debug.Log("Dpad Down");
+                if (debugLogMode) Debug.Log("Dpad Y: " + Math.Round(dPadInput.y, 2));
             }
             else
             {
@@ -144,9 +192,9 @@ public class ControllerDebugger : MonoBehaviour
 
         if (dPadInput.x > 0)
         {
-            if (!dPadOneTouchOneOut)
+            if (outputDirectionalPadAxis)
             {
-                if (debugLogMode) Debug.Log("Dpad Right");
+                if (debugLogMode) Debug.Log("Dpad X: " + Math.Round(dPadInput.x, 2));
             }
             else
             {
@@ -160,9 +208,9 @@ public class ControllerDebugger : MonoBehaviour
         }
         else if (dPadInput.x < 0)
         {
-            if (!dPadOneTouchOneOut)
+            if (outputDirectionalPadAxis)
             {
-                if (debugLogMode) Debug.Log("Dpad Left");
+                if (debugLogMode) Debug.Log("Dpad X: " + Math.Round(dPadInput.x, 2));
             }
             else
             {
@@ -181,15 +229,5 @@ public class ControllerDebugger : MonoBehaviour
         }
     }
 
-    private void OnApplicationFocus(bool focus)
-    {
-        if (focus)
-        {
-            focused = true;
-        }
-        else
-        {
-            focused = false;
-        }
-    }
+    private void OnApplicationFocus(bool focus) => focused = focus;
 }

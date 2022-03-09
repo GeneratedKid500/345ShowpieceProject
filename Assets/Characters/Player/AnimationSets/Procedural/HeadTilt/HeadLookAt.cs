@@ -8,11 +8,10 @@ public class HeadLookAt : MonoBehaviour
 
     [Range(0.0f, 1.0f)]
     [SerializeField] float targetLookAtWeight = 1;
-    [SerializeField] bool useDistanceFromTarget;
-    private float maxDistanceFromTarget = 10;
     private float currentLookAtWeight = 0;
     [SerializeField] bool ikActive = true;
     [SerializeField] Transform lookObj;
+    private string objTag;
 
     private void Start()
     {
@@ -30,27 +29,27 @@ public class HeadLookAt : MonoBehaviour
         {
             if (lookObj != null)
             {
-                if (currentLookAtWeight > targetLookAtWeight)
+                Vector3 dirToObj = lookObj.position - transform.parent.position;
+                if (Physics.Raycast(transform.parent.position, dirToObj, out RaycastHit hit, Mathf.Infinity) && hit.transform.tag == objTag)
                 {
-                    currentLookAtWeight = targetLookAtWeight;
-                }
-
-                if (currentLookAtWeight < targetLookAtWeight)
-                {
-                    if (useDistanceFromTarget)
+                    Debug.DrawRay(transform.parent.position, dirToObj, Color.green);
+                    if (currentLookAtWeight > targetLookAtWeight)
                     {
-                        float currentDistanceFromTarget = Vector3.Distance(transform.position, lookObj.position);
-                        if (currentDistanceFromTarget < maxDistanceFromTarget)
-                        {
-                            currentLookAtWeight = currentDistanceFromTarget / maxDistanceFromTarget;
-                        }
-                        else
-                        {
-                            currentLookAtWeight = 0;
-                        }
+                        currentLookAtWeight = targetLookAtWeight;
                     }
-                    else currentLookAtWeight += 0.0075f;
 
+                    if (currentLookAtWeight < targetLookAtWeight)
+                    {
+                        currentLookAtWeight += 0.0075f;
+                    }
+                }
+                else
+                {
+                    Debug.DrawRay(transform.parent.position, dirToObj, Color.red);
+                    if (currentLookAtWeight > 0)
+                    {
+                        currentLookAtWeight -= 0.0075f;
+                    }
                 }
                 anim.SetLookAtWeight(currentLookAtWeight);
                 anim.SetLookAtPosition(lookObj.position);
@@ -70,24 +69,15 @@ public class HeadLookAt : MonoBehaviour
         }
     }
 
-    public void SetNewLookAt(Transform obj, float strength, bool distanceBased = false, float maxDistance = 10)
+    public void SetNewLookAt(Transform obj, float strength, string newTag)
     {
         ikActive = true;
         lookObj = obj;
         targetLookAtWeight = Mathf.Clamp01(strength);
-
-        useDistanceFromTarget = distanceBased;
-        maxDistanceFromTarget = maxDistance;
+        objTag = newTag;
     }
 
-    public void EnableHeadIK()
-    {
-        ikActive = true;
-    }
-
-    public void DisableHeadIK()
-    {
-        ikActive = false;
-    }
+    public void EnableHeadIK() { ikActive = true; }
+    public void DisableHeadIK() { ikActive = false; }
 
 }

@@ -13,6 +13,7 @@ public class ThirdPersonControl : MonoBehaviour
     [SerializeField] bool enableCrouching = false;
     [SerializeField] bool enableStairs = false;
     [SerializeField] bool enableAnim = false;
+    bool[] baseSystems;
 
     [Header("CONTROLS")]
     [SerializeField] string jumpA;
@@ -78,17 +79,16 @@ public class ThirdPersonControl : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] Animator anim;
-    float moveAdd = 0;
+    private float moveAdd = 0;
     // animator parameter hashes
-    int animMoveSpeedHash;
-    int animYVelocityHash;
-    int animisGroundedHash;
-    int animJumpingHash;
+    private readonly int animMoveSpeedHash = Animator.StringToHash("MoveSpeed");
+    private readonly int animYVelocityHash = Animator.StringToHash("Y Velocity");
+    private readonly int animisGroundedHash = Animator.StringToHash("isGrounded");
+    private readonly int animJumpingHash = Animator.StringToHash("jumping");
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false; //locks inside area and makes mouse cursor invisible
+        SetBaseSystems();
 
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
@@ -121,7 +121,6 @@ public class ThirdPersonControl : MonoBehaviour
             anim = GetComponentInChildren<Animator>();
             if (anim != null)
             {
-                SetAnimHashes();
                 for (int i = 0; i < anim.layerCount; i++)
                 {
                     if (anim.GetLayerName(i) == "Crouch Layer")
@@ -135,7 +134,6 @@ public class ThirdPersonControl : MonoBehaviour
             {
                 Debug.LogError("Animation Enabled with no attatched animator!");
             }
-
         }
     }
 
@@ -429,14 +427,6 @@ public class ThirdPersonControl : MonoBehaviour
     }
 
     #region ANIMATION
-    void SetAnimHashes()
-    {
-        animMoveSpeedHash = Animator.StringToHash("MoveSpeed");
-        animYVelocityHash = Animator.StringToHash("Y Velocity");
-        animisGroundedHash = Animator.StringToHash("isGrounded");
-        animJumpingHash = Animator.StringToHash("jumping");
-    }
-
     void AnimationSetVars()
     {
         if (!enableAnim) return;
@@ -536,15 +526,44 @@ public class ThirdPersonControl : MonoBehaviour
     }
     #endregion
 
+    #region Application Management
+    void SetBaseSystems()
+    {
+        baseSystems = new bool[6];
+
+        baseSystems[0] = enableMovement;
+        baseSystems[1] = enableCamera;
+        baseSystems[2] = enableJumping;
+        baseSystems[3] = enableCrouching;
+        baseSystems[4] = enableStairs;
+        baseSystems[5] = enableAnim;
+    }
+
     private void OnApplicationFocus(bool focus)
     {
         if (focus)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
+            enableMovement = baseSystems[0];
+            enableCamera = baseSystems[1];
+            enableJumping = baseSystems[2];
+            enableCrouching = baseSystems[3];
+            enableStairs = baseSystems[4];
+            enableAnim = baseSystems[5];
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            enableMovement = false;
+            enableCamera = false;
+            enableJumping = false;
+            enableCrouching = false;
+            enableStairs = false;
+            enableAnim = false;
         }
     }
     // can be referenced by anything to end game
@@ -552,5 +571,6 @@ public class ThirdPersonControl : MonoBehaviour
     {
         Application.Quit();
     }
+    #endregion
 }
 

@@ -18,10 +18,15 @@ public class HeadLookTarget : MonoBehaviour
     [SerializeField] Vector3 colliderSize;
     [Range(0.0f, 1.0f)]
     [SerializeField] float drawStrength;
+    Transform parentTransform;
+    string parentTag;
 
     private void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().GetHeadLookAt();
+
+        parentTransform = transform.parent.transform;
+        parentTag = transform.parent.tag;
 
         if (useScriptSize) objectCollider.size = colliderSize;
         else colliderSize = objectCollider.size;
@@ -31,7 +36,7 @@ public class HeadLookTarget : MonoBehaviour
     {
         if (!other.tag.Equals("Player")) return;
 
-        playerRef.SetNewLookAt(transform.parent.transform, drawStrength, transform.parent.tag);
+        playerRef.SetNewLookAt(parentTransform, drawStrength, parentTag);
     }
 
     private void OnTriggerExit(Collider other)

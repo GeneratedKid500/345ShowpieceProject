@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// Tilts the head of a Unity Humanoid Avatar towards areas specified through the prefab collider
 public class HeadLookAt : MonoBehaviour
 {
     Animator anim;
@@ -10,6 +9,7 @@ public class HeadLookAt : MonoBehaviour
     [SerializeField] float targetLookAtWeight = 1;
     private float currentLookAtWeight = 0;
     [SerializeField] bool ikActive = true;
+    [SerializeField] bool nearLookObj = true;
     [SerializeField] Transform lookObj;
     private string objTag;
 
@@ -19,13 +19,13 @@ public class HeadLookAt : MonoBehaviour
 
         if (lookObj = null)
         {
-            ikActive = false;
+            nearLookObj = false;
         }
     }
 
     private void OnAnimatorIK(int layerIndex)
     {
-        if (ikActive)
+        if (ikActive && nearLookObj)
         {
             if (lookObj != null)
             {
@@ -33,14 +33,13 @@ public class HeadLookAt : MonoBehaviour
                 if (Physics.Raycast(transform.parent.position, dirToObj, out RaycastHit hit, Mathf.Infinity) && hit.transform.tag == objTag)
                 {
                     Debug.DrawRay(transform.parent.position, dirToObj, Color.green);
-                    if (currentLookAtWeight > targetLookAtWeight)
-                    {
-                        currentLookAtWeight = targetLookAtWeight;
-                    }
-
                     if (currentLookAtWeight < targetLookAtWeight)
                     {
                         currentLookAtWeight += 0.0075f;
+                    }
+                    else if (targetLookAtWeight > currentLookAtWeight)
+                    {
+                        currentLookAtWeight -= 0.0075f;
                     }
                 }
                 else
@@ -71,13 +70,20 @@ public class HeadLookAt : MonoBehaviour
 
     public void SetNewLookAt(Transform obj, float strength, string newTag)
     {
-        ikActive = true;
+        nearLookObj = true;
         lookObj = obj;
         targetLookAtWeight = Mathf.Clamp01(strength);
         objTag = newTag;
     }
 
-    public void EnableHeadIK() { ikActive = true; }
-    public void DisableHeadIK() { ikActive = false; }
+    public void EnableHeadIK() => ikActive = true;
+    public void DisableHeadIK() => ikActive = false;
+
+    private void OnDisable()
+    {
+        nearLookObj = false;
+        lookObj = null;
+        objTag = null;
+    }
 
 }

@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
+/// Bundled with a collider to enable head IK and rotation on a Unity Humanoid Avatar.
 [RequireComponent(typeof(BoxCollider))]
 public class HeadLookTarget : MonoBehaviour
 {
@@ -23,7 +19,7 @@ public class HeadLookTarget : MonoBehaviour
 
     private void Start()
     {
-        playerRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerManager>().GetHeadLookAt();
+        playerRef = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerIKManager>().GetHeadLookAt();
 
         parentTransform = transform.parent.transform;
         parentTag = transform.parent.tag;
@@ -43,6 +39,6 @@ public class HeadLookTarget : MonoBehaviour
     {
         if (!other.tag.Equals("Player")) return;
 
-        playerRef.DisableHeadIK();
+        //playerRef.DisableHeadIK();
     }
 }

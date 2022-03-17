@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// Calls the Jump function on the ThirdPersonControl script through Animation Events if Animation is enabled
 public class GenericStartJump : MonoBehaviour
 {
     ThirdPersonControl fpControl;

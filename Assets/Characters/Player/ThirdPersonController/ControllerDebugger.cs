@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+/// Debug Playstation Controller Inputs
 public class ControllerDebugger : MonoBehaviour
 {
     [SerializeField] bool debugLogMode;

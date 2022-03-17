@@ -3,6 +3,8 @@
 [RequireComponent(typeof(Rigidbody))]
 public class ThirdPersonControl : MonoBehaviour
 {
+    private PlayerIKManager pim;
+
     private Rigidbody rb;
     private CapsuleCollider pCollider;
 
@@ -88,6 +90,8 @@ public class ThirdPersonControl : MonoBehaviour
 
     void Awake()
     {
+        if (enableAnim) pim = GetComponent<PlayerIKManager>();
+
         SetBaseSystems();
 
         rb = GetComponent<Rigidbody>();
@@ -388,6 +392,7 @@ public class ThirdPersonControl : MonoBehaviour
     {
         if (Input.GetButton(sprintA) || Input.GetButton(sprintB))
         {
+            //pim.DisableArmMovers();
             if (crouching || crouched)
             {
                 if (!isAnythingAboveHead())
@@ -405,6 +410,7 @@ public class ThirdPersonControl : MonoBehaviour
         }
         else
         {
+            //pim.EnableArmMovers();
             if (sprintOn) sprintOn = false;
             return false;
         }
@@ -443,10 +449,12 @@ public class ThirdPersonControl : MonoBehaviour
         {
             if (sprintOn)
             {
+                pim.DisableArmMovers();
                 if (moveAdd < 2) moveAdd += 0.1f;
             }
             else
-            {   
+            {
+                pim.EnableArmMovers();
                 if (moveAdd > 1) moveAdd -= 0.1f;
 
                 if (moveAdd <= 1) moveAdd += 0.1f;

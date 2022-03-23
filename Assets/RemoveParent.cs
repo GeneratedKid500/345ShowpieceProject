@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RemoveParent : MonoBehaviour
 {
-    void Awake()
+    void Start()
     {
         this.gameObject.transform.parent = null;
     }

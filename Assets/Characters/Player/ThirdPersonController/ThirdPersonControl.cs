@@ -392,7 +392,6 @@ public class ThirdPersonControl : MonoBehaviour
     {
         if (Input.GetButton(sprintA) || Input.GetButton(sprintB))
         {
-            //pim.DisableArmMovers();
             if (crouching || crouched)
             {
                 if (!isAnythingAboveHead())
@@ -410,7 +409,6 @@ public class ThirdPersonControl : MonoBehaviour
         }
         else
         {
-            //pim.EnableArmMovers();
             if (sprintOn) sprintOn = false;
             return false;
         }

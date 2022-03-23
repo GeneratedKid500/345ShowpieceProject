@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-
 public class EnemyLockOn : MonoBehaviour
 {
     public float range;
@@ -30,20 +29,21 @@ public class EnemyLockOn : MonoBehaviour
     public bool lockedOn;
     private bool temp;
 
-    private TargetLockCamera cam;
+    private PlayerMainStateManager cam;
     private LockOnMovement characterMovement;
     private TargetingConeTrigger coneTrigger;
 
     private void Awake()
     {
-        cam = GetComponent<TargetLockCamera>();
+        cam = GetComponent<PlayerMainStateManager>();
         characterMovement = GetComponent<LockOnMovement>();
         coneTrigger = GetComponentInChildren<TargetingConeTrigger>();
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("R1") || Input.GetKeyDown(KeyCode.F)) temp = !temp;
+        if (Input.GetButton("R1") || Input.GetKey(KeyCode.F)) temp = true;
+        else temp = false;
 
         if (temp)
         {
@@ -52,7 +52,7 @@ public class EnemyLockOn : MonoBehaviour
         else
         {
             enemiesToLock.Clear();
-            cam.targetLockCam = false;
+            cam.lockedOn = false;
         }
 
         enemyCount = enemiesToLock.Count;
@@ -60,7 +60,7 @@ public class EnemyLockOn : MonoBehaviour
         if (enemyCount == 0 || priorityEnemy == null)
         {
             InitialiseTargetGroup();
-            cam.targetLockCam = false;
+            cam.lockedOn = false;
             foundPriorityEnemy = false;
 
             closestEnemy = null;
@@ -73,7 +73,7 @@ public class EnemyLockOn : MonoBehaviour
 
         if (enemyCount != 0)
         {
-            cam.targetLockCam = true;
+            cam.lockedOn = true;
             FindClosestEnemy();
             if (closestEnemy != null && foundPriorityEnemy == false) SetPriorityEnemy(closestEnemy);
             SwitchTarget();
@@ -89,7 +89,7 @@ public class EnemyLockOn : MonoBehaviour
         enemiesToLock = new List<Transform>();
         foreach(Collider col in enemyDetect)
         {
-            Enemy enemy = col.GetComponent<Enemy>();
+            Targetable enemy = col.GetComponent<Targetable>();
             if (enemy != null) enemiesToLock.Add(col.transform);
         }
     }
@@ -117,8 +117,8 @@ public class EnemyLockOn : MonoBehaviour
     {
         CinemachineTargetGroup.Target enemy;
         enemy.target = priorityEnemy;
-        enemy.weight = priorityEnemy.GetComponent<Enemy>().camWeight;
-        enemy.radius = priorityEnemy.GetComponent<Enemy>().camRadius;
+        enemy.weight = priorityEnemy.GetComponent<Targetable>().camWeight;
+        enemy.radius = priorityEnemy.GetComponent<Targetable>().camRadius;
 
         group.m_Targets[1].target = enemy.target;
         group.m_Targets[1].weight = enemy.weight;

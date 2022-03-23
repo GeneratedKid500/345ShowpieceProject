@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetingConeTrigger : MonoBehaviour
@@ -16,7 +14,7 @@ public class TargetingConeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Enemy>())
+        if (other.gameObject.GetComponent<Targetable>())
         {
             selectedEnemy = other.gameObject;
         }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class PlayerTargetableRadar : MonoBehaviour
+public class PlayerLockOnSystem : MonoBehaviour
 {
     [Header("Inputs")]
     public string lockOnInputA;
@@ -14,6 +14,7 @@ public class PlayerTargetableRadar : MonoBehaviour
 
     [Header("Objects")]
     public Transform cameraTarget;
+    private CameraTargetDetatch ctd;
     public Targetable emptyTarget;
     public LayerMask targetableLayer;
 
@@ -35,13 +36,8 @@ public class PlayerTargetableRadar : MonoBehaviour
     private void Awake()
     {
         cam = GetComponent<PlayerMainStateManager>();
+        ctd = GetComponentInChildren<CameraTargetDetatch>();
         targetGroup = GetComponentInChildren<CinemachineTargetGroup>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
     }
 
     // Update is called once per frame
@@ -53,10 +49,14 @@ public class PlayerTargetableRadar : MonoBehaviour
         {
             if (targetCount > 0)
             {
-                FindClosestEnemy();
-
-                if (selectedTarget == null && priorityTarget == null || selectedTarget == emptyTarget && priorityTarget == null)
+                if (closestTarget == null)
                 {
+                    FindClosestTarget();
+                }
+
+                if (selectedTarget == null && priorityTarget == null || selectedTarget == emptyTarget && priorityTarget == null || !targetsToLock.Contains(selectedTarget))
+                {
+                    FindClosestTarget();
                     ChangeTarget(closestTarget);
                 }
                 else if (priorityTarget != null && selectedTarget == null)
@@ -140,7 +140,7 @@ public class PlayerTargetableRadar : MonoBehaviour
         targetCount = targetsToLock.Count;
     }
 
-    void FindClosestEnemy()
+    void FindClosestTarget()
     {
         float closest = range;
         closestTarget = null;
@@ -192,6 +192,7 @@ public class PlayerTargetableRadar : MonoBehaviour
 
     void AssignTargetValues(Targetable pTarget)
     {
+        ctd.ResetDetatchedBool();
         CinemachineTargetGroup.Target target;
         target.target = pTarget.transform;
         target.weight = pTarget.camWeight;
@@ -206,20 +207,24 @@ public class PlayerTargetableRadar : MonoBehaviour
         cameraTarget.localPosition = Vector3.zero;
     }
 
+    private void OnTransformChildrenChanged()
+    {
+        if (ctd.GetDetatchedBool())
+        {
+            ctd.ResetDetatchedBool();
+            FindClosestTarget();
+            ChangeTarget(closestTarget);
+        }
+    }
+
     public void SetPriorityEnemy(Transform t)
     {
         Targetable asset = t.GetComponent<Targetable>();
         if (asset == null) return;
         priorityTarget = asset;
     }
-    public void SetPriorityEnemy(Targetable t)
-    {
-        priorityTarget = t;
-    }
-    public void ResetPriorityTarget()
-    {
-        priorityTarget = null;
-    }
+    public void SetPriorityEnemy(Targetable t) => priorityTarget = t;
+    public void ResetPriorityTarget() => priorityTarget = null;
 
 
 }

@@ -3,11 +3,10 @@
 [RequireComponent(typeof(Rigidbody))]
 public class ThirdPersonControl : MonoBehaviour
 {
-    private PlayerIKManager pim;
-
     private Rigidbody rb;
     private CapsuleCollider pCollider;
 
+    #region Toggle Variables
     [Header("Toggles")]
     [SerializeField] bool enableMovement = false;
     [SerializeField] bool enableCamera = false;
@@ -16,7 +15,9 @@ public class ThirdPersonControl : MonoBehaviour
     [SerializeField] bool enableStairs = false;
     [SerializeField] bool enableAnim = false;
     bool[] baseSystems;
+    #endregion
 
+    #region Control Variables
     [Header("CONTROLS")]
     [SerializeField] string jumpA;
     [SerializeField] string jumpB;
@@ -24,7 +25,9 @@ public class ThirdPersonControl : MonoBehaviour
     [SerializeField] string sprintA, sprintB;
     [SerializeField] float CameraSensitivityX = 15;
     [SerializeField] float CameraSensitivityY = 15;
+    #endregion
 
+    #region Movement Variables
     [Header("Movement")]
     ////walking
     [SerializeField] float walkSpeed = 8;
@@ -42,21 +45,27 @@ public class ThirdPersonControl : MonoBehaviour
     private float crouchTimer;
     private bool crouching;
     private bool crouched;
+    #endregion
 
+    #region Jumping Variables
     [Header("Jumping")]
     [SerializeField] float jumpForce = 220;
     [SerializeField] float fastFallMultiplier = 2.5f;
     [SerializeField] float lowJumpMultiplier = 2.5f;
     private bool grounded;
     [SerializeField] LayerMask groundedMask;
+    #endregion
 
+    #region Staircase Variables
     [Header("Stairs")]
     [SerializeField] GameObject stepRayUpper;
     [SerializeField] GameObject stepRayLower;
     [SerializeField] float stepSmooth = 2f;
     [SerializeField] float stepDistance = 0.1f;
     [SerializeField] LayerMask stairMask; //layer mask to determine what a stair is
+    #endregion
 
+    #region Camera Variables
     [Header("Camera Rotation")]
     // cam follow
     [SerializeField] float camFollowSpeed = 0.2f;
@@ -78,7 +87,9 @@ public class ThirdPersonControl : MonoBehaviour
     private Transform cameraTransform;
     private Transform cameraMain;
     private Transform cameraPivot;
+    #endregion
 
+    #region Animation Variables
     [Header("Animation")]
     [SerializeField] Animator anim;
     private float moveAdd = 0;
@@ -87,6 +98,8 @@ public class ThirdPersonControl : MonoBehaviour
     private readonly int animYVelocityHash = Animator.StringToHash("Y Velocity");
     private readonly int animisGroundedHash = Animator.StringToHash("isGrounded");
     private readonly int animJumpingHash = Animator.StringToHash("jumping");
+    private PlayerIKManager pim;
+    #endregion
 
     void Awake()
     {
@@ -125,6 +138,7 @@ public class ThirdPersonControl : MonoBehaviour
             anim = GetComponentInChildren<Animator>();
             if (anim != null)
             {
+                // finds the layer name "Crouch Layer" for crouch animations
                 for (int i = 0; i < anim.layerCount; i++)
                 {
                     if (anim.GetLayerName(i) == "Crouch Layer")
@@ -143,6 +157,7 @@ public class ThirdPersonControl : MonoBehaviour
 
     void Update()
     {
+        // gets inputs for movement, crouching and jumping in this frame
         GetMoveInput();
 
         if (enableCrouching) Crouch();
@@ -157,7 +172,7 @@ public class ThirdPersonControl : MonoBehaviour
         // applies movement
         rb.velocity = new Vector3(moveAmount.x, rb.velocity.y, moveAmount.z);
 
-        ////STAIR CLIMB
+        // calls STAIRS 3 times to check a ~90 radius in front of players position
         if (enableStairs)
         {
             STAIRS(new Vector3(1.5f, 0, 1f)); //45' X
@@ -167,6 +182,7 @@ public class ThirdPersonControl : MonoBehaviour
 
         if (enableAnim)
         {
+            // passes calculted values to the animator
             AnimationSprintBlend(Mathf.Abs(rb.velocity.x) + Mathf.Abs(rb.velocity.z));
             AnimationCrouchBlend();
         }
@@ -231,6 +247,10 @@ public class ThirdPersonControl : MonoBehaviour
             transform.rotation = playerRotation;
         }
     }
+
+    public bool isMovementEnabled() { return enableMovement; }
+    public void EnableMovement() => enableMovement = true;
+    public void DisableMovement() => enableMovement = false;
     #endregion
 
     #region CAMERA
@@ -243,7 +263,7 @@ public class ThirdPersonControl : MonoBehaviour
             Vector3 targetPosition = Vector3.SmoothDamp(cameraMain.position, tp, ref cameraFollowVel, camFollowSpeed);
             cameraMain.position = targetPosition;
 
-            // cam rot
+            // camera rotational values
             lookAngle = lookAngle + (Input.GetAxis("Mouse X") * cameraLookSpeed);
 
             pivotAngle = pivotAngle - (Input.GetAxis("Mouse Y") * cameraPivotSpeed);
@@ -262,6 +282,9 @@ public class ThirdPersonControl : MonoBehaviour
         }
     }
 
+    // calculates if the camera would collide into something
+    // sphere cast on the camera to the pivot point to see if it gets interrupted
+    // lerps until not interrupted
     private void CameraCollisions()
     {
         float targetPos = defaultPos;
@@ -285,6 +308,10 @@ public class ThirdPersonControl : MonoBehaviour
         cameraVectorPos.z = Mathf.Lerp(cameraTransform.localPosition.z, targetPos, offsetSpeed);
         cameraTransform.localPosition = cameraVectorPos;
     }
+
+    public bool IsCameraEnabled() { return enableCamera; }
+    public void EnableCamera() => enableCamera = true;
+    public void DisableCamera() => enableCamera = false;
     #endregion
 
     #region CROUCH
@@ -342,8 +369,14 @@ public class ThirdPersonControl : MonoBehaviour
 
         }
     }
+
+    // grabbers
+    public bool IsCrouchEnabled() { return enableCrouching; }
+    public void EnableCrouch() => enableCrouching = true;
+    public void DisableCrouch() => enableCrouching = false;
     #endregion
 
+    #region STAIRS
     void STAIRS(Vector3 rayDir) 
     {
         //uses raycasts to check if the player is hitting stairs and if they should go up
@@ -362,6 +395,12 @@ public class ThirdPersonControl : MonoBehaviour
         Debug.DrawRay(stepRayLower.transform.position, transform.TransformDirection(rayDir));
         Debug.DrawRay(stepRayUpper.transform.position, transform.TransformDirection(rayDir));
     }
+
+    // grabbers
+    public bool IsStairsEnabled() { return enableStairs; }
+    public void EnableStairs() => enableStairs = true;
+    public void DisableStairs() => enableStairs = false;
+    #endregion
 
     #region JUMP
     void JUMP() // handles the player jump input, begins the animation process
@@ -386,9 +425,14 @@ public class ThirdPersonControl : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce);
     }
+
+    //grabbers
+    public bool IsJumpEnabled() { return enableJumping; }
+    public void EnableJump() => enableJumping = true;
+    public void DisableJump() => enableJumping = false;
     #endregion
 
-    bool isSprinting()
+    bool isSprinting() // returns true if sprint button is pressed 
     {
         if (Input.GetButton(sprintA) || Input.GetButton(sprintB))
         {
@@ -424,13 +468,14 @@ public class ThirdPersonControl : MonoBehaviour
         }
     }
 
-    bool isAnythingAboveHead()
+    bool isAnythingAboveHead() // returns true if object is detected within x distance above player 
     {
         if (Physics.SphereCast(transform.position, pCollider.radius, transform.up, out RaycastHit Hit, 0.5f)) return true;
         else return false;
     }
 
     #region ANIMATION
+    // sets grounded and y velocity variables in the animator
     void AnimationSetVars()
     {
         if (!enableAnim) return;
@@ -439,6 +484,9 @@ public class ThirdPersonControl : MonoBehaviour
         anim.SetFloat(animYVelocityHash, rb.velocity.y);
     }
 
+    // calculates the value to pass to the Movement Blend Tree
+    // if sprinting value increases
+    // if not goes down to X value
     void AnimationSprintBlend(float movement)
     {
         if (!enableAnim) return;
@@ -469,6 +517,7 @@ public class ThirdPersonControl : MonoBehaviour
         }
 
         anim.SetFloat(animMoveSpeedHash, moveAdd);
+        // value snapping to keep positions consistent
         if (moveAdd > -0.2f && moveAdd < 0.05f)
         {
             anim.SetFloat(animMoveSpeedHash, 0);
@@ -482,9 +531,13 @@ public class ThirdPersonControl : MonoBehaviour
             anim.SetFloat(animMoveSpeedHash, 2);
         }
     }
-
+    
+    // increases the weight of the "Crouching" animator layer
+    // gives the appearance of a natural transition to crouching / standing
     void AnimationCrouchBlend()
     {
+        if (!enableAnim) return;
+
         float layerWeight = anim.GetLayerWeight(crouchLayerID);
         float incrementAmount = 0.05f;
         if (crouching || crouched)
@@ -512,6 +565,9 @@ public class ThirdPersonControl : MonoBehaviour
         }
     }
 
+    // used by scripts tied to animations
+    // called by an AnimationEvent
+    // triggers jump at appropriate moment of animation
     void AnimationJump()
     {
         if (!enableAnim) return;
@@ -524,12 +580,18 @@ public class ThirdPersonControl : MonoBehaviour
         }
     }
 
+    // used by scripts tied to animations
+    // applies position calculated using the deltaPositions of the animation
     public void ApplyRootMotion(Vector3 velocity)
     {
-        //rb.drag = 0;
         velocity.y = rb.velocity.y;
         rb.velocity = velocity;
     }
+
+    // grabbers
+    public bool IsAnimationEnabled() { return enableAnim; }
+    public void EnableAnimation() => enableAnim = true;
+    public void DisableAnimation() => enableAnim = false;
     #endregion
 
     #region Application Management

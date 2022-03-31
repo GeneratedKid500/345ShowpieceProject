@@ -1,18 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 using Cinemachine;
 
 public class PlayerMainStateManager : MonoBehaviour
 {
     public bool lockedOn;
-    public CinemachineVirtualCameraBase freeCam;
-    public CinemachineVirtualCameraBase zTargetCam;
+    [SerializeField] CinemachineVirtualCameraBase freeCam;
+    [SerializeField] CinemachineVirtualCameraBase zTargetCam;
 
-    public CanvasGroup reticleTemp;
+    [SerializeField] CanvasGroup reticleTemp;
     private float reticleAlpha;
 
     private CinemachineFreeLook freeLook;
-    private Vector3 baseCameraPos;
 
     void Start()
     {
@@ -24,6 +22,7 @@ public class PlayerMainStateManager : MonoBehaviour
     // updates camera between free camera and lock on camera
     void Update()
     {
+        // enables cameras for lock on system
         if (lockedOn)
         {
             if (freeCam.gameObject.activeSelf)
@@ -36,8 +35,10 @@ public class PlayerMainStateManager : MonoBehaviour
             if (reticleAlpha < 0.8f)
             {
                 reticleAlpha += 0.01f;
+                reticleTemp.alpha = reticleAlpha;
             }
         }
+        // enables camera for regular system
         else
         {
             if (!freeCam.gameObject.activeSelf)
@@ -50,9 +51,8 @@ public class PlayerMainStateManager : MonoBehaviour
             if (reticleAlpha > 0)
             {
                 reticleAlpha = 0;
+                reticleTemp.alpha = reticleAlpha;
             }
         }
-
-        reticleTemp.alpha = reticleAlpha;
     }
 }

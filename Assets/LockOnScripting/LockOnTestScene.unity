@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -750,7 +750,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557132464}
-  m_LocalRotation: {x: 0.020096153, y: 0.000000035663373, z: -0.000000009216903, w: 0.9997981}
+  m_LocalRotation: {x: 0.020096153, y: 0.0000000023453488, z: -6.060197e-10, w: 0.9997981}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1242,6 +1242,7 @@ GameObject:
   - component: {fileID: 863058678}
   - component: {fileID: 863058677}
   - component: {fileID: 863058676}
+  - component: {fileID: 863058679}
   m_Layer: 5
   m_Name: LockOnReticleTEMP
   m_TagString: Untagged
@@ -1320,6 +1321,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863058674}
   m_CullTransparentMesh: 1
+--- !u!225 &863058679
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863058674}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &968776985
 GameObject:
   m_ObjectHideFlags: 3
@@ -1472,7 +1485,7 @@ GameObject:
   - component: {fileID: 985005390}
   - component: {fileID: 985005389}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PlayerUpdateCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3161,7 +3174,7 @@ MonoBehaviour:
   enableMovement: 1
   enableCamera: 0
   enableJumping: 1
-  enableCrouching: 1
+  enableCrouching: 0
   enableStairs: 1
   enableAnim: 1
   jumpA: Jump
@@ -3215,6 +3228,7 @@ MonoBehaviour:
   lockedOn: 0
   freeCam: {fileID: 811284799045957920}
   zTargetCam: {fileID: 1501836843}
+  reticleTemp: {fileID: 863058679}
 --- !u!114 &4943863002878497868
 MonoBehaviour:
   m_ObjectHideFlags: 0

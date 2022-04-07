@@ -30,7 +30,7 @@ public class HeadLookAt : MonoBehaviour
             if (lookObj != null)
             {
                 Vector3 dirToObj = lookObj.position - transform.parent.position;
-                if (Physics.Raycast(transform.parent.position, dirToObj, out RaycastHit hit, Mathf.Infinity) && hit.transform.tag == objTag)
+                if (Physics.Raycast(transform.parent.position, dirToObj, out RaycastHit hit, Mathf.Infinity) && hit.transform.tag == objTag && targetLookAtWeight > 0)
                 {
                     Debug.DrawRay(transform.parent.position, dirToObj, Color.green);
                     if (currentLookAtWeight < targetLookAtWeight)

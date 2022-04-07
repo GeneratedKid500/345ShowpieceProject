@@ -39,6 +39,6 @@ public class HeadLookTarget : MonoBehaviour
     {
         if (!other.tag.Equals("Player")) return;
 
-        //playerRef.DisableHeadIK();
+        playerRef.SetNewLookAt(parentTransform, 0, parentTag);
     }
 }

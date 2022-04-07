@@ -351,8 +351,10 @@ public class ThirdPersonControl : MonoBehaviour
         {
             if (crouching)
             {
-                pCollider.height = 1.40444f; //lower height
-                pCollider.center = new Vector3(-0.006775737f, -0.2977802f, -1.192093e-07f);
+                //pCollider.height = 1.40444f; //lower height
+                pCollider.height = 1.212187f;
+                //pCollider.center = new Vector3(-0.006775737f, -0.2977802f, -1.192093e-07f);
+                pCollider.center = new Vector3(-0.006775737f, -0.3126173f, -1.192093e-07f);
             }
             else
             {
@@ -363,7 +365,7 @@ public class ThirdPersonControl : MonoBehaviour
                 else
                 {
                     pCollider.height = standHeight; //upper height
-                    pCollider.center = new Vector3(-0.006775737f, -0.09381586f, -1.192093e-07f);
+                    pCollider.center = new Vector3(-0.006775737f, -0.08124983f, -1.192093e-07f);
                 }
             }
 

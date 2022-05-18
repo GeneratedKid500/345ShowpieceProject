@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UI_Sticky : MonoBehaviour
@@ -20,7 +18,7 @@ public class UI_Sticky : MonoBehaviour
         pos = activeCam.WorldToScreenPoint(sticky.transform.position);
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         transform.position = pos;
     }

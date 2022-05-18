@@ -217,6 +217,7 @@ public class PlayerLockOnSystem : MonoBehaviour
         }
     }
 
+    // "priority" enemy override
     public void SetPriorityEnemy(Transform t)
     {
         Targetable asset = t.GetComponent<Targetable>();
@@ -226,5 +227,11 @@ public class PlayerLockOnSystem : MonoBehaviour
     public void SetPriorityEnemy(Targetable t) => priorityTarget = t;
     public void ResetPriorityTarget() => priorityTarget = null;
 
+    // target pass
+    public Transform GetSelectedTarget()
+    {
+        if (selectedTarget == null || selectedTarget == emptyTarget) return null;
 
+        return selectedTarget.transform;
+    }
 }

@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
-    public float camWeight;
+    public float camWeight = 0.5f;
 
-    public float camRadius;
+    public float camRadius = 4;
 
     private void Awake()
     {

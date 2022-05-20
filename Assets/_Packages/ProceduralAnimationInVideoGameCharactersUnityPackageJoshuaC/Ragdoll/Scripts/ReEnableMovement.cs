@@ -19,6 +19,7 @@ public class ReEnableMovement : StateMachineBehaviour
         roo.ragdolled = true;
         tpc.DisableCrouching();
         tpc.DisableCharacter();
+        tpc.SetRotation(false);
     }
 
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
@@ -36,5 +37,6 @@ public class ReEnableMovement : StateMachineBehaviour
         roo.ragdolled = false;
         tpc.DisableCrouching();
         tpc.EnableCharacter();
+        tpc.SetRotation(true);
     }
 }

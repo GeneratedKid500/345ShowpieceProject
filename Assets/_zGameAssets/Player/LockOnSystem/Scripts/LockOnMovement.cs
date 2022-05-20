@@ -1,4 +1,5 @@
 using UnityEngine;
+using Cinemachine;
 
 public class LockOnMovement : MonoBehaviour
 {
@@ -6,9 +7,9 @@ public class LockOnMovement : MonoBehaviour
     private Transform t;
     private Rigidbody rb;
     private Animator anim;
-    private CapsuleCollider pCollider;
 
     // lock on target
+    [SerializeField] CinemachineFreeLook lockOnCam;
     private PlayerLockOnSystem los;
     private Transform lockOnTarget;
 
@@ -29,7 +30,6 @@ public class LockOnMovement : MonoBehaviour
         t = transform;
         rb = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-        pCollider = GetComponent<CapsuleCollider>();
     }
 
     void Start()
@@ -40,6 +40,14 @@ public class LockOnMovement : MonoBehaviour
     void Update()
     {
         lockOnTarget = los.GetSelectedTarget();
+        if (lockOnTarget == null)
+        {
+            lockOnCam.m_RecenterToTargetHeading.m_enabled = false;
+        }
+        else
+        {
+            lockOnCam.m_RecenterToTargetHeading.m_enabled = true;
+        }
 
         MovementInput();
     }
@@ -63,15 +71,17 @@ public class LockOnMovement : MonoBehaviour
         horz = Input.GetAxisRaw("Horizontal");
 
         Vector3 targetDir = Vector3.zero;
-        targetDir = cam.forward * vert;
-        targetDir = targetDir + cam.right * horz;
-        targetDir.Normalize();
-        targetDir.y = 0;
-
+        if (grounded)
+        {
+            targetDir = cam.forward * vert;
+            targetDir = targetDir + cam.right * horz;
+            targetDir.Normalize();
+            targetDir.y = 0;
+        }
         moveAmount = Vector3.SmoothDamp(moveAmount, targetDir * walkSpeed, ref smoothMoveVelocity, .15f);
 
-        anim.SetFloat("MoveX", (float)System.Math.Round(transform.InverseTransformDirection(targetDir).x, 2));
-        anim.SetFloat("MoveZ", (float)System.Math.Round(transform.InverseTransformDirection(targetDir).z, 2));
+        anim.SetFloat("MoveX", (float)System.Math.Round(transform.InverseTransformDirection(targetDir).x, 1));
+        anim.SetFloat("MoveZ", (float)System.Math.Round(transform.InverseTransformDirection(targetDir).z, 1));
     }
 
     void RotatingToTarget()

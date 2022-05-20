@@ -4,6 +4,8 @@ using Cinemachine;
 public class PlayerMainStateManager : MonoBehaviour
 {
     public bool lockedOn = false;
+    public bool ragdolled;
+
     private RagdollOnOff rgd;
 
     [Header("Cameras")]
@@ -61,8 +63,10 @@ public class PlayerMainStateManager : MonoBehaviour
     // updates camera between free camera and lock on camera
     void Update()
     {
+        ragdolled = rgd.ragdolled;
+
         float layerWeight = anim.GetLayerWeight(strafeLayerID);
-        if (rgd.ragdolled)
+        if (ragdolled)
         {
             lockedOn = false;
             anim.SetLayerWeight(strafeLayerID, 0);

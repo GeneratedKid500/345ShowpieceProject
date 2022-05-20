@@ -102,10 +102,12 @@ public class RagdollOnOff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.PageDown))
         {
             RagdollToggle();
         }
+#endif
 
         if (ragdolling)
         {
@@ -304,6 +306,7 @@ public class RagdollOnOff : MonoBehaviour
                 if (!ragdolled)
                 {
                     tpc.DisableCharacter();
+                    tpc.SetRotation(false);
                     ragdolling = true;
                     ragdolled = true;
                 }

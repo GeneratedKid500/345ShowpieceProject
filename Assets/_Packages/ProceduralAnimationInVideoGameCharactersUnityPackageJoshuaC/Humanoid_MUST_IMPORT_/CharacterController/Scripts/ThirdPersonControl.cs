@@ -195,18 +195,15 @@ public class ThirdPersonControl : MonoBehaviour
         horz = Input.GetAxisRaw("Horizontal");
 
         Vector3 moveDIR = Vector3.zero;
-        if (enableMovement)
-        {
-            moveDIR = cameraTransform.forward * vert;
-            moveDIR = moveDIR + cameraTransform.right * horz;
-            moveDIR.Normalize();
-            moveDIR.y = 0;
-        }
+        moveDIR = cameraTransform.forward * vert;
+        moveDIR = moveDIR + cameraTransform.right * horz;
+        moveDIR.Normalize();
+        moveDIR.y = 0;
 
         Vector3 targetMoveAmount = Vector3.zero;
         if (grounded) // only check for speed change when on floor
         {
-            if (crouching) targetMoveAmount = moveDIR * (walkSpeed / (sprintMultiplier/2));
+            if (crouching) targetMoveAmount = moveDIR * (walkSpeed / (sprintMultiplier / 2));
             else if (!isSprinting()) targetMoveAmount = moveDIR * walkSpeed;
             else targetMoveAmount = moveDIR * (walkSpeed * sprintMultiplier);
         }
@@ -407,7 +404,7 @@ public class ThirdPersonControl : MonoBehaviour
     public void DisableJump() => enableJumping = false;
     #endregion
 
-    bool isSprinting() // returns true if sprint button is pressed 
+    public bool isSprinting() // returns true if sprint button is pressed 
     {
         if (Input.GetButton(sprintA) || Input.GetButton(sprintB))
         {
@@ -433,7 +430,7 @@ public class ThirdPersonControl : MonoBehaviour
         }
     }
 
-    bool isGrounded() //checks if grounded 
+    public bool isGrounded() //checks if grounded 
     {
         Vector3 positionStore = transform.position;
         positionStore.y += 1;

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a4992609f11ab74aa8bee06a75890ad, type: 3}
+  m_Name: GreatSwordCombo2
+  m_EditorClassIdentifier: Assembly-CSharp::Combo
+  weapon: {fileID: 11400000, guid: ab3a82654ff0a564db31305d6ab9955a, type: 2}
+  combo:
+  - Light Attack 1
+  - Light Attack 2
+  - Heavy Attack 3

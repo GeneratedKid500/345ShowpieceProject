@@ -4,9 +4,13 @@ using Cinemachine;
 public class PlayerMainStateManager : MonoBehaviour
 {
     public bool lockedOn = false;
-    public bool ragdolled;
+    public bool ragdolled = false;
+    public bool attacking = false;
+    public bool grounded = false;
+    public bool sprinting = false;
 
     private RagdollOnOff rgd;
+    private PlayerActionDistributor ad;
 
     [Header("Cameras")]
     [SerializeField] CinemachineVirtualCameraBase freeCam;
@@ -25,7 +29,9 @@ public class PlayerMainStateManager : MonoBehaviour
 
     [Header("Animation Blending")]
     private Animator anim;
-    private int strafeLayerID;
+    private int strafeLayerID = -1;
+    private int groundedAttackLayerID = -1;
+    private int airAttackLayerID = -1;
     [SerializeField] float strafeBlendSpeed = 3f;
 
     private void Awake()
@@ -36,16 +42,30 @@ public class PlayerMainStateManager : MonoBehaviour
             // finds the layer name "Strafe Layer" for strafing animations
             for (int i = 0; i < anim.layerCount; i++)
             {
-                if (anim.GetLayerName(i) == "Strafe Layer")
+                string name = anim.GetLayerName(i);
+                if (name == "Strafe Layer")
                 {
                     strafeLayerID = i;
-                    break;
+                    continue;
                 }
+                else if (name == "Generic Attack Layer")
+                {
+                    groundedAttackLayerID = i;
+                    continue;
+                }
+                else if (name == "Air Attack Layer")
+                {
+                    airAttackLayerID = i;
+                    continue;
+                }
+
+                if (strafeLayerID != -1 && groundedAttackLayerID != -1 && airAttackLayerID != -1) break;
             }
         }
         else Debug.LogError("PlayerMainStateManager - No Animator Attatched");
 
         rgd = GetComponentInChildren<RagdollOnOff>();
+        ad = GetComponent<PlayerActionDistributor>();
 
         freeLook = freeCam.gameObject.GetComponent<CinemachineFreeLook>();
         reticleAlpha = reticleTemp.alpha;
@@ -64,16 +84,24 @@ public class PlayerMainStateManager : MonoBehaviour
     void Update()
     {
         ragdolled = rgd.ragdolled;
+        attacking = ad.attacking;
 
-        float layerWeight = anim.GetLayerWeight(strafeLayerID);
         if (ragdolled)
         {
+            sprinting = false;
             lockedOn = false;
             anim.SetLayerWeight(strafeLayerID, 0);
+            ad.canInput = false;
         }
 
+        float layerWeight = anim.GetLayerWeight(strafeLayerID);
+        // if locked on
         if (lockedOn && !rgd.ragdolled)
         {
+            sprinting = false;
+            lom.SetMovement(!attacking);
+            grounded = lom.returnGrounded();
+
             if (tpc.Grounded)
             {
                 // enables lock-on camera
@@ -104,10 +132,25 @@ public class PlayerMainStateManager : MonoBehaviour
                 }
             }
         }
+        // not locked on
         else
         {
+            grounded = tpc.isGrounded();
+            sprinting = tpc.isSprinting();
+
+            // disables character movement when attacking
+            if (attacking)
+            {
+                tpc.DisableCrouching();
+                tpc.DisableCharacter();
+            }
+            else
+            {
+                tpc.EnableCharacter();
+            }
+
             // enables regular camera
-            if (!freeCam.gameObject.activeSelf)
+            if (!freeCam.gameObject.activeSelf && !attacking)
             {
                 freeCam.gameObject.SetActive(true);
                 freeLook.m_RecenterToTargetHeading.m_enabled = false;
@@ -132,5 +175,60 @@ public class PlayerMainStateManager : MonoBehaviour
                 anim.SetLayerWeight(strafeLayerID, layerWeight - (strafeBlendSpeed * Time.deltaTime));
             }
         }
+
+        if (attacking)
+        {
+            // if attacking on ground
+            if (grounded)
+            {
+                if (anim.GetLayerWeight(groundedAttackLayerID) < 1 && !anim.GetCurrentAnimatorStateInfo(3).IsName("Neutral"))
+                {
+                    anim.SetLayerWeight(groundedAttackLayerID, anim.GetLayerWeight(groundedAttackLayerID) + (6 * Time.deltaTime));
+                }
+
+                if (anim.GetLayerWeight(airAttackLayerID) > 0)
+                {
+                    anim.SetLayerWeight(airAttackLayerID, anim.GetLayerWeight(airAttackLayerID) - (6 * Time.deltaTime));
+                }
+            }
+            // if attacking in air
+            else
+            {
+                if (anim.GetLayerWeight(airAttackLayerID) < 1 && !anim.GetCurrentAnimatorStateInfo(4).IsName("Neutral"))
+                {
+                    anim.SetLayerWeight(airAttackLayerID, anim.GetLayerWeight(airAttackLayerID) + (6 * Time.deltaTime));
+                }
+
+                if (anim.GetLayerWeight(groundedAttackLayerID) > 0)
+                {
+                    anim.SetLayerWeight(groundedAttackLayerID, anim.GetLayerWeight(groundedAttackLayerID) - (6 * Time.deltaTime));
+                }
+            }
+        }
+        else
+        {
+            if (anim.GetLayerWeight(groundedAttackLayerID) > 0)
+            {
+                anim.SetLayerWeight(groundedAttackLayerID, anim.GetLayerWeight(groundedAttackLayerID) - (6 * Time.deltaTime));
+            }
+
+            if (anim.GetLayerWeight(airAttackLayerID) > 0)
+            {
+                anim.SetLayerWeight(airAttackLayerID, anim.GetLayerWeight(airAttackLayerID) - (6 * Time.deltaTime));
+            }
+        }
+    }
+
+    public void EnableGenericAttackingLayer()
+    {
+        if (grounded)
+        {
+            anim.SetLayerWeight(groundedAttackLayerID, 1);
+        }
+        else
+        {
+            anim.SetLayerWeight(groundedAttackLayerID, 0);
+        }
+
     }
 }

@@ -8,6 +8,8 @@ public class LockOnMovement : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
 
+    private bool enableMovement;
+
     // lock on target
     [SerializeField] CinemachineFreeLook lockOnCam;
     private PlayerLockOnSystem los;
@@ -71,7 +73,7 @@ public class LockOnMovement : MonoBehaviour
         horz = Input.GetAxisRaw("Horizontal");
 
         Vector3 targetDir = Vector3.zero;
-        if (grounded)
+        if (grounded && enableMovement)
         {
             targetDir = cam.forward * vert;
             targetDir = targetDir + cam.right * horz;
@@ -107,4 +109,11 @@ public class LockOnMovement : MonoBehaviour
             return false;
         }
     }
+
+    public bool returnGrounded()
+    {
+        return grounded;
+    }
+
+    public void SetMovement(bool val) => enableMovement = val;
 }

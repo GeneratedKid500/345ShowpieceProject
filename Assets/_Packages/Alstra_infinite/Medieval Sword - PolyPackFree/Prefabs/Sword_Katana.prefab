@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 983186712893737726}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.26088426, y: 2.6856575, z: 0.059620705}
-  m_Center: {x: -0.112920985, y: 1.63837, z: -0.008608459}
+  m_Size: {x: 0.18806857, y: 1.634265, z: 0.059620705}
+  m_Center: {x: -0.07651314, y: 0.9308491, z: -0.008608459}
 --- !u!114 &983186712893737726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+  location: 
 --- !u!1 &8812820742857086820
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +73,7 @@ GameObject:
   - component: {fileID: 7011420404709291697}
   m_Layer: 0
   m_Name: Sword_Katana
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

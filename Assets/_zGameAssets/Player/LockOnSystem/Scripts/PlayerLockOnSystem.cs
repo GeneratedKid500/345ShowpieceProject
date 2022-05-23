@@ -205,6 +205,10 @@ public class PlayerLockOnSystem : MonoBehaviour
         selectedTarget = pTarget;
         cameraTarget.parent = selectedTarget.transform;
         cameraTarget.localPosition = Vector3.zero;
+        if (cameraTarget.position.y < emptyTarget.transform.position.y)
+        {
+            cameraTarget.position = new Vector3(cameraTarget.position.x, emptyTarget.transform.position.y, cameraTarget.position.z);
+        }
     }
 
     private void OnTransformChildrenChanged()

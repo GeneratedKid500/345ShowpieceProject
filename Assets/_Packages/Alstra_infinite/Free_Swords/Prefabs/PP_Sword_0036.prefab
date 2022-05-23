@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8947529840615434558}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,6 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+  location: 
 --- !u!1 &4288314564357049428
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +73,7 @@ GameObject:
   - component: {fileID: 4288314564354790036}
   m_Layer: 0
   m_Name: PP_Sword_0036
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

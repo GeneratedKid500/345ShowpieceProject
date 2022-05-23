@@ -33,9 +33,3 @@ MonoBehaviour:
   - Greatsword Light Attack 1
   - Greatsword Light Attack 2
   - Greatsword Light Attack 3
-  combos:
-  - {fileID: 11400000, guid: a71e16e53f96c6d4bae4b9bcb696e578, type: 2}
-  - {fileID: 11400000, guid: 4921aec4ddac7f74982c12835f452d7e, type: 2}
-  - {fileID: 11400000, guid: 05ba1cd36faeca74180ad2fffb4dd5b4, type: 2}
-  - {fileID: 11400000, guid: fe12893b2e001d74b8f267abd97f044d, type: 2}
-  longestCombo: 4

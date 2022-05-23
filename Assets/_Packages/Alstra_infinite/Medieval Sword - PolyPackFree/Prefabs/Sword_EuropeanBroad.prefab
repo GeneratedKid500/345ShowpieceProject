@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8128590046212194902}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,8 +44,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.13710481, y: 2.999993, z: 0.046628375}
-  m_Center: {x: -0.0023730733, y: 1.8494607, z: 0.013252979}
+  m_Size: {x: 0.13710481, y: 1.6700869, z: 0.046628375}
+  m_Center: {x: -0.0023730695, y: 1.1845076, z: 0.013252979}
 --- !u!114 &8128590046212194902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,6 +58,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+  location: 
 --- !u!1 &6340734133710337989
 GameObject:
   m_ObjectHideFlags: 0
@@ -71,7 +73,7 @@ GameObject:
   - component: {fileID: 5547920623139821072}
   m_Layer: 0
   m_Name: Sword_EuropeanBroad
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

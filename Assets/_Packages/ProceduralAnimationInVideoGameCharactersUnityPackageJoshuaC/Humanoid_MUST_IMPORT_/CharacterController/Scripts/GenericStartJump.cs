@@ -30,7 +30,6 @@ public class GenericStartJump : MonoBehaviour
             transform.parent.rotation = anim.rootRotation;
             deltaPos.y = 0f;
             transform.parent.position += deltaPos;
-
         }
         else
         {

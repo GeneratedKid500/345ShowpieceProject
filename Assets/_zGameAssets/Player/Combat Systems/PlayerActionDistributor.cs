@@ -37,6 +37,8 @@ public class PlayerActionDistributor : MonoBehaviour
 
     private Weapon[] weapons;
     private int currentWeapon;
+    bool waitingForTransition = false;
+    string animationToTransitionInto = null;
 
     private void Start()
     {
@@ -47,10 +49,6 @@ public class PlayerActionDistributor : MonoBehaviour
         inputList = new List<int> { };
 
         weapons = Resources.LoadAll<Weapon>("");
-        foreach (Weapon weapon in weapons)
-        {
-            weapon.InitialiseCombos();
-        }
         currentWeapon = 0;
     }
 
@@ -139,6 +137,23 @@ public class PlayerActionDistributor : MonoBehaviour
                 inputList.Clear();
             }
         }
+
+        if (pmsm.grounded)
+        {
+            if (waitingForTransition && anim.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.9f)
+            {
+                anim.CrossFade(animationToTransitionInto, 0.15f);
+                waitingForTransition = false;
+            }
+        }
+        else
+        {
+            if (waitingForTransition && anim.GetCurrentAnimatorStateInfo(4).normalizedTime > 0.8f)
+            {
+                anim.CrossFade(animationToTransitionInto, 0.1f);
+                waitingForTransition = false;
+            }
+        }
     }
 
     void AddMovementInput(int input)
@@ -188,12 +203,17 @@ public class PlayerActionDistributor : MonoBehaviour
 
     void CalculateAttack(int input)
     {
+        if (waitingForTransition) return;
+
         attacking = true;
+        waitingForTransition = true;
         if (!pmsm.grounded)
         {
             if (comboStep > 1) comboStep = 0;
 
-            anim.CrossFade(weapons[currentWeapon].airAttacks[comboStep], 0.1f);
+            //anim.CrossFade(weapons[currentWeapon].airAttacks[comboStep], 0.1f);
+            animationToTransitionInto = weapons[currentWeapon].airAttacks[comboStep];
+
             comboStep++;
         }
         else if (pmsm.sprinting)
@@ -201,11 +221,13 @@ public class PlayerActionDistributor : MonoBehaviour
             switch (input)
             {
                 case 101:
-                    anim.CrossFade(weapons[currentWeapon].sprintLight, 0.1f);
+                    //anim.CrossFade(weapons[currentWeapon].sprintLight, 0.1f);
+                    animationToTransitionInto = weapons[currentWeapon].sprintLight;
                     break;
 
                 case 102:
-                    anim.CrossFade(weapons[currentWeapon].sprintHeavy, 0.1f);
+                    //anim.CrossFade(weapons[currentWeapon].sprintHeavy, 0.1f);
+                    animationToTransitionInto = weapons[currentWeapon].sprintHeavy;
                     break;
             }
         }
@@ -214,7 +236,8 @@ public class PlayerActionDistributor : MonoBehaviour
             switch (input)
             {
                 case 101:
-                    anim.CrossFade(weapons[currentWeapon].combo[comboStep], 0.1f);
+                    //anim.CrossFade(weapons[currentWeapon].combo[comboStep], 0.1f);
+                    animationToTransitionInto = weapons[currentWeapon].combo[comboStep];
                     if (comboStep >= weapons[currentWeapon].combo.Length - 1)
                     {
                         comboStep = 0;
@@ -230,17 +253,20 @@ public class PlayerActionDistributor : MonoBehaviour
                     {
                         if (anim.GetCurrentAnimatorStateInfo(3).IsName(weapons[currentWeapon].weaponName + " Light Attack " + (weapons[currentWeapon].lightAttacks.Length).ToString()))
                         {
-                            anim.CrossFade(weapons[currentWeapon].heavyAttacks[weapons[currentWeapon].lightAttacks.Length], 0.1f);
+                            //anim.CrossFade(weapons[currentWeapon].heavyAttacks[weapons[currentWeapon].lightAttacks.Length], 0.1f);
+                            animationToTransitionInto = weapons[currentWeapon].heavyAttacks[weapons[currentWeapon].lightAttacks.Length];
                         }
                         else
                         {
-                            anim.CrossFade(weapons[currentWeapon].heavyAttacks[0], 0.1f);
+                            //anim.CrossFade(weapons[currentWeapon].heavyAttacks[0], 0.1f);
+                            animationToTransitionInto = weapons[currentWeapon].heavyAttacks[0];
                         }
                     }
                     else
                     {
-                        string atk = weapons[currentWeapon].FindHeavyAttack(comboStep);
-                        anim.CrossFade(atk, 0.1f);
+                        //string atk = weapons[currentWeapon].FindHeavyAttack(comboStep);
+                        //anim.CrossFade(atk, 0.1f);
+                        animationToTransitionInto = weapons[currentWeapon].FindHeavyAttack(comboStep);
                         comboStep = 0;
                     }
                     break;

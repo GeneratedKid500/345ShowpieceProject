@@ -85,13 +85,13 @@ public class PlayerMainStateManager : MonoBehaviour
     {
         ragdolled = rgd.ragdolled;
         attacking = ad.attacking;
+        ad.canInput = !ragdolled;
 
         if (ragdolled)
         {
             sprinting = false;
             lockedOn = false;
             anim.SetLayerWeight(strafeLayerID, 0);
-            ad.canInput = false;
         }
 
         float layerWeight = anim.GetLayerWeight(strafeLayerID);
@@ -227,7 +227,7 @@ public class PlayerMainStateManager : MonoBehaviour
         }
         else
         {
-            anim.SetLayerWeight(groundedAttackLayerID, 0);
+            anim.SetLayerWeight(airAttackLayerID, 1);
         }
 
     }

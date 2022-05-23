@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Collectible
+  - Enemy
+  - DoNotBlend
   layers:
   - Default
   - TransparentFX

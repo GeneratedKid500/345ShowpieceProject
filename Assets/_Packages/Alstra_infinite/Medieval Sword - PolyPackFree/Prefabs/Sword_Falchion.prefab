@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4228995145963850896}
   m_Layer: 0
   m_Name: Sword_Falchion
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8080016193907869240}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+  location: 
 --- !u!65 &8080016193907869240
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140,5 +142,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.32733363, y: 2.6832075, z: 0.104486786}
-  m_Center: {x: -0.019120544, y: 1.6331553, z: -0.0007374622}
+  m_Size: {x: 0.32733363, y: 1.5656986, z: 0.104486786}
+  m_Center: {x: -0.019120544, y: 0.9553783, z: -0.0007374622}

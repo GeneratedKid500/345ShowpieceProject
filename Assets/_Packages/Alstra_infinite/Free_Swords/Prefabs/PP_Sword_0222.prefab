@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5193304468134167638}
   m_Layer: 0
   m_Name: PP_Sword_0222
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6484007799196190445}
   m_Layer: 0
   m_Name: Collider
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+  location: 
 --- !u!65 &6484007799196190445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140,5 +142,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.10209517, y: 1.0653273, z: 0.0327933}
-  m_Center: {x: 0.0029880628, y: 0.64429694, z: 0.052487962}
+  m_Size: {x: 0.20902403, y: 1.5094544, z: 0.0327933}
+  m_Center: {x: 0.04673197, y: 0.8663605, z: 0.052487962}

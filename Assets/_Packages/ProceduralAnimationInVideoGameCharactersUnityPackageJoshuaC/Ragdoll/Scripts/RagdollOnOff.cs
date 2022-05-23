@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
 public class RagdollOnOff : MonoBehaviour
 {
     public bool ragdolled;
+
+    [SerializeField] bool onPlayer = false;
 
     private ThirdPersonControl tpc;
 
@@ -71,9 +74,11 @@ public class RagdollOnOff : MonoBehaviour
     private void Awake()
     {
         // get reference to controller script
-        tpc = transform.root.GetComponent<ThirdPersonControl>();
-        defaultCameraOffset = tpc.cameraOffset;
-
+        if (onPlayer)
+        {
+            tpc = transform.root.GetComponent<ThirdPersonControl>();
+            defaultCameraOffset = tpc.cameraOffset;
+        }
         // get main body components
         if (mainCollider == null) mainCollider = transform.root.GetComponent<Collider>();
         if (mainRigidbody == null) mainRigidbody = transform.root.GetComponent<Rigidbody>();
@@ -94,6 +99,14 @@ public class RagdollOnOff : MonoBehaviour
 
     void Start()
     {
+        //List<Transform> newList = new List<Transform> (hips.GetComponentsInChildren<Transform>());
+        //foreach(Transform t in newList)
+        //{
+        //    if (t.tag == "DoNotBlend")
+        //    {
+        //        newList.Remove(t);
+        //    }
+        //}
         bodyParts = hips.GetComponentsInChildren<Transform>();
         storedPositions = new Vector3[bodyParts.Length];
         storedRotations = new Quaternion[bodyParts.Length];
@@ -222,7 +235,7 @@ public class RagdollOnOff : MonoBehaviour
                 for (int i = 0; i < bodyParts.Length; i++)
                 {
                     // do not move root of model
-                    if (bodyParts[i] != transform)
+                    if (bodyParts[i] != transform && bodyParts[i].tag != "DoNotBlend")
                     {
                         if (bodyParts[i] == anim.GetBoneTransform(HumanBodyBones.Hips)) // only interpolate the position of the hips
                         {
@@ -264,8 +277,11 @@ public class RagdollOnOff : MonoBehaviour
         if (Mathf.Abs(vel.y) < 0.3f) vel.y = 0; 
 
         // set lower camera offset
-        tpc.cameraOffset = ragdollCameraOffset;
-        if (adjustCinemachineLook) cinemachineCam.LookAt = activeTarget;
+        if (onPlayer)
+        {
+            tpc.cameraOffset = ragdollCameraOffset;
+            if (adjustCinemachineLook) cinemachineCam.LookAt = activeTarget;
+        }
 
         // disable main body components
         mainCollider.enabled = false;
@@ -280,7 +296,8 @@ public class RagdollOnOff : MonoBehaviour
         SetRagdollComponents(false, Vector3.zero);
 
         // reset camera offset
-        tpc.cameraOffset = defaultCameraOffset;
+        if (onPlayer)
+            tpc.cameraOffset = defaultCameraOffset;
 
         // enable main body components
         mainCollider.enabled = true;
@@ -305,13 +322,35 @@ public class RagdollOnOff : MonoBehaviour
             {
                 if (!ragdolled)
                 {
-                    tpc.DisableCharacter();
-                    tpc.SetRotation(false);
+                    if (onPlayer)
+                    {
+                        tpc.DisableCharacter();
+                        tpc.SetRotation(false);
+                    }
+                    else
+                    {
+                        // disable enemy
+                    }
                     ragdolling = true;
                     ragdolled = true;
                 }
             }
         }
     }
+
+    public void RagdollToggle(bool val)
+    {
+        ragdolling = val;
+        ragdolled = val;
+    }
+
+    public void AddRagdollForce(Vector3 force)
+    {
+        foreach (Rigidbody rb in limbRigidbodies)
+        {
+            rb.AddForce(force, ForceMode.Impulse);
+        }
+    }
+
     #endregion
 }

@@ -203,12 +203,12 @@ public class PlayerLockOnSystem : MonoBehaviour
         targetGroup.m_Targets[1].radius = target.radius;
 
         selectedTarget = pTarget;
-        cameraTarget.parent = selectedTarget.transform;
+        cameraTarget.parent = selectedTarget.GetTargetHolder();
         cameraTarget.localPosition = Vector3.zero;
-        if (cameraTarget.position.y < emptyTarget.transform.position.y)
-        {
-            cameraTarget.position = new Vector3(cameraTarget.position.x, emptyTarget.transform.position.y, cameraTarget.position.z);
-        }
+        //if (cameraTarget.position.y < emptyTarget.transform.position.y)
+        //{
+        //    cameraTarget.position = new Vector3(cameraTarget.position.x, emptyTarget.transform.position.y, cameraTarget.position.z);
+        //}
     }
 
     private void OnTransformChildrenChanged()

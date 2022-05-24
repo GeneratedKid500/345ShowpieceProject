@@ -89,6 +89,7 @@ public class RagdollOnOff : MonoBehaviour
         foreach (Collider limb in limbColliders)
         {
             limb.isTrigger = true;
+            limb.enabled = false;
         }
         limbRigidbodies = GetComponentsInChildren<Rigidbody>();
         foreach (Rigidbody rb in limbRigidbodies)
@@ -99,14 +100,6 @@ public class RagdollOnOff : MonoBehaviour
 
     void Start()
     {
-        //List<Transform> newList = new List<Transform> (hips.GetComponentsInChildren<Transform>());
-        //foreach(Transform t in newList)
-        //{
-        //    if (t.tag == "DoNotBlend")
-        //    {
-        //        newList.Remove(t);
-        //    }
-        //}
         bodyParts = hips.GetComponentsInChildren<Transform>();
         storedPositions = new Vector3[bodyParts.Length];
         storedRotations = new Quaternion[bodyParts.Length];
@@ -263,6 +256,7 @@ public class RagdollOnOff : MonoBehaviour
     {
         for (int i = 0; i < Mathf.Min(limbColliders.Length, limbRigidbodies.Length); i++)
         {
+            limbColliders[i].enabled = value;
             limbColliders[i].isTrigger = !value;
             limbRigidbodies[i].isKinematic = !value;
 
@@ -348,7 +342,7 @@ public class RagdollOnOff : MonoBehaviour
     {
         foreach (Rigidbody rb in limbRigidbodies)
         {
-            rb.AddForce(force, ForceMode.Impulse);
+            rb.AddForce(force / limbRigidbodies.Length, ForceMode.Impulse);
         }
     }
 

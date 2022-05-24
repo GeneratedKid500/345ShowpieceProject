@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class SwordCollider : MonoBehaviour
 {
+    [SerializeField] Transform root;
+
     [SerializeField] Collider coll;
 
     [SerializeField] string location = "";
@@ -17,6 +19,8 @@ public class SwordCollider : MonoBehaviour
 
     private void Start()
     {
+        root = transform.root;
+
         targetsHit = new List<HealthSystem>();
 
         if (location == "")
@@ -38,7 +42,7 @@ public class SwordCollider : MonoBehaviour
             if (target != null && target.transform.root != transform.root)
             {
                 targetsHit.Add(target); 
-                target.TakeDamage(transform, attackKnockbackStrength, attackDamage, isHeavy);
+                target.TakeDamage(root, attackKnockbackStrength, attackDamage, isHeavy);
             }
         }
     }

@@ -147,7 +147,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 9076137835244771473}
-    m_Position: {x: 1060, y: 150, z: 0}
+    m_Position: {x: 1060, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5679291507511765224}
     m_Position: {x: 820, y: 110, z: 0}
@@ -545,7 +545,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 15
-  knockbackStrength: 2
+  knockbackStrength: 0
   heavyAttack: 0
 --- !u!114 &-5067179605057965151
 MonoBehaviour:
@@ -702,7 +702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 20
-  knockbackStrength: 2
+  knockbackStrength: 0
   heavyAttack: 0
 --- !u!1101 &-3895624834942736205
 AnimatorStateTransition:
@@ -827,7 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 30
-  knockbackStrength: 10
+  knockbackStrength: 3
   heavyAttack: 1
 --- !u!114 &-2458245911658560546
 MonoBehaviour:
@@ -892,7 +892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 30
-  knockbackStrength: 10
+  knockbackStrength: 3
   heavyAttack: 1
 --- !u!114 &-1642037010009046532
 MonoBehaviour:
@@ -1632,7 +1632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 10
-  knockbackStrength: 5
+  knockbackStrength: 0
   heavyAttack: 0
 --- !u!114 &1792190853465887921
 MonoBehaviour:
@@ -1688,7 +1688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 20
-  knockbackStrength: 10
+  knockbackStrength: 3
   heavyAttack: 1
 --- !u!1101 &2381614611118760608
 AnimatorStateTransition:
@@ -1930,7 +1930,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 660, y: -60, z: 0}
+  m_AnyStatePosition: {x: 680, y: -20, z: 0}
   m_EntryPosition: {x: 670, y: 20, z: 0}
   m_ExitPosition: {x: 1020, y: -100, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -1949,7 +1949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 15
-  knockbackStrength: 2
+  knockbackStrength: 0
   heavyAttack: 0
 --- !u!1102 &3957787087744865715
 AnimatorState:
@@ -2006,7 +2006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: Foot
   attackDamage: 20
-  knockbackStrength: 10
+  knockbackStrength: 3.32
   heavyAttack: 1
 --- !u!1102 &4708552718353731147
 AnimatorState:
@@ -2282,7 +2282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destination: 
   attackDamage: 30
-  knockbackStrength: 10
+  knockbackStrength: 3
   heavyAttack: 1
 --- !u!1107 &7487391499341576062
 AnimatorStateMachine:

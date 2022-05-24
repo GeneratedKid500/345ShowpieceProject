@@ -5,8 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Collectible
-  - Enemy
   - DoNotBlend
+  - Duel
+  - Ranged
+  - Swarm
+  - Enemy
+  - Waypoint
   layers:
   - Default
   - TransparentFX
@@ -18,7 +22,7 @@ TagManager:
   - TEMP
   - Walls
   - Targetable
-  - 
+  - Entity
   - 
   - 
   - 

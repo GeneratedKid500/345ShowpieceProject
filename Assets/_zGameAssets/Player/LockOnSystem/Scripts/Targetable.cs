@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
+    [SerializeField] private Transform targetHolder;
+
     public float camWeight = 0.5f;
 
     public float camRadius = 4;
@@ -9,7 +11,7 @@ public class Targetable : MonoBehaviour
     private void Awake()
     {
         // sets layer to be "Targetable" layerID 9
-        transform.gameObject.layer = 9;
+        if (gameObject.layer == 0) transform.gameObject.layer = 9;
     }
 
     // temporary function
@@ -23,5 +25,10 @@ public class Targetable : MonoBehaviour
         }
 
         Destroy(this.gameObject);
+    }
+
+    public Transform GetTargetHolder()
+    {
+        return targetHolder;
     }
 }

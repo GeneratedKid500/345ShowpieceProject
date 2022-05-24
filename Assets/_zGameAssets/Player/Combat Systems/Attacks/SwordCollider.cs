@@ -36,20 +36,15 @@ public class SwordCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider obj)
     {
-        if (obj.transform.GetComponent<Targetable>() != null)
+        if (obj.transform == transform.root) return;
+
+        HealthSystem target = obj.transform.GetComponent<HealthSystem>();
+        if (target != null && target.transform.root != transform.root)
         {
-            HealthSystem target = obj.transform.GetComponent<HealthSystem>();
-            if (target != null && target.transform.root != transform.root)
-            {
-                targetsHit.Add(target); 
-                target.TakeDamage(root, attackKnockbackStrength, attackDamage, isHeavy);
-            }
+            Debug.Log(target.transform.root.name);
+            targetsHit.Add(target);
+            target.TakeDamage(root, attackKnockbackStrength, attackDamage, isHeavy);
         }
-    }
-
-    private void OnTriggerExit(Collider obj)
-    {
-
     }
 
     public void ApplyStats(int atkdmg, float atkKnbckStr, bool heavy)

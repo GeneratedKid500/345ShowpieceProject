@@ -6,6 +6,8 @@ public class HealthSystem : MonoBehaviour
 {
     [SerializeField] bool onPlayer = false;
 
+    PlayerMainStateManager pmsm;
+
     EnemyMovement em;
     Animator anim;
     Rigidbody rb;
@@ -23,6 +25,7 @@ public class HealthSystem : MonoBehaviour
         ragdoll = GetComponentInChildren<RagdollOnOff>();
 
         em = GetComponent<EnemyMovement>();
+        pmsm = GetComponent<PlayerMainStateManager>();
 
         currenthealth = health;
     }
@@ -46,7 +49,7 @@ public class HealthSystem : MonoBehaviour
             //rb.AddForce(dir * strength, ForceMode.Impulse);
             if (heavy)
             {
-                ragdoll.RagdollToggle(true);
+                ragdoll.RagdollToggle();
                 ragdoll.AddRagdollForce(dir * strength);
             }
             else
@@ -57,10 +60,13 @@ public class HealthSystem : MonoBehaviour
                     em.LocalAlert(source);
                     em.RotateToTarget(source);
                 }
+                else
+                {
+                    pmsm.hurt = true;
+                }
 
                 anim.Play("GetHurt");
             }
-
         }
 
         currenthealth -= damage;

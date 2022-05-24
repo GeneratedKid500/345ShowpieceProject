@@ -7,59 +7,84 @@ public class RangeMovement : EnemyMovement
 {
     [Header("Ranger Attributes")]
     [SerializeField] private float timeBetweenAttacks = 0.5f;
-    [SerializeField] private float timeUntilRetreat = 7f;
-    private float timePassed;
     private float timePassedSinceAttack;
-    private bool retreat;
+    [SerializeField] private float timeBetweenRepos = 5f;
+    private float timePassedSinceRePos;
+    private bool repos;
+    private Vector3 calculatedRePosPos;
+
+    private bool attacking;
 
     public override void AttackSubroutine()
     {
-        Vector3 backTrackPos = currentTarget.forward * stoppingDistance;
+        targeting = true;
 
-        if (retreat)
+        if (repos)
         {
-            targeting = false;
-            agent.SetDestination(backTrackPos);
-            agent.isStopped = false;
+            if (!attacking)
+            {
+                AlterSpeed(6);
+                timePassedSinceRePos = 0;
+
+                if (!agent.enabled)
+                {
+                    agent.enabled = true;
+                    agent.isStopped = false;
+                    agent.SetDestination(calculatedRePosPos);
+                }
+
+                if (agent.remainingDistance < 2)
+                {
+                    repos = false;
+                }
+            }
         }
         else
         {
-            targeting = true;
-            agent.SetDestination(transform.position);
-            agent.isStopped = true;
+            AlterSpeed(0);
+            RotateToTarget(currentTarget);
         }
 
-        if (targetDistance < stoppingDistance)
+        if (attacking)
         {
-            timePassed += Time.fixedDeltaTime;
-            if (timePassed > timeUntilRetreat)
+            if (agent.enabled)
             {
-                timePassed = 0;
-                retreat = true;
+                agent.isStopped = true;
+                agent.SetDestination(transform.position);
+                agent.enabled = false;
             }
-            else
+
+            if (targetDistance < stoppingDistance / 1.5)
+            {
+                timePassedSinceRePos += Time.fixedDeltaTime;
+                if (timePassedSinceRePos > timeBetweenRepos/2)
+                {
+                    calculatedRePosPos = transform.position - (-transform.forward * stoppingDistance);
+                    repos = true;
+                }
+            }
+        }
+        else
+        {
+            if (!repos)
             {
                 timePassedSinceAttack += Time.fixedDeltaTime;
                 if (timePassedSinceAttack > timeBetweenAttacks)
                 {
                     timePassedSinceAttack = 0;
                     anim.SetTrigger("Attacking");
+                    attacking = true;
                 }
             }
-        }
-        else
-        {
-            retreat = false;
         }
     }
 
     public override void RetreatSubroutine()
     {
         base.RetreatSubroutine();
-
-        timePassed = 0;
-        retreat = false;
     }
+
+    public void SetAttacking(bool val) => attacking = val; 
 }
 
 #if UNITY_EDITOR

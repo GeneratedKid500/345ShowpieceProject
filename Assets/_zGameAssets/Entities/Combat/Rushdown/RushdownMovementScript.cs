@@ -10,29 +10,44 @@ public class RushdownMovementScript : EnemyMovement
     [SerializeField] private float timeBetweenAttacks = 1f;
     private float timePassed;
 
+    private bool attacking;
+
     public override void AttackSubroutine()
     {
         base.AttackSubroutine();
 
-        timePassed += Time.deltaTime;
-
-        if (timePassed > timeBetweenAttacks)
+        if (!attacking)
         {
-            timePassed = 0f;
-
-            int random = Random.Range(0, 2);
-
-            if (random == 0)
+            timePassed += Time.deltaTime;
+            if (timePassed > timeBetweenAttacks)
             {
-                anim.SetTrigger("AttackA");
-            }
-            else
-            {
-                anim.SetTrigger("AttackB");
+                timePassed = 0f;
+
+                int random = Random.Range(0, 2);
+
+                if (random == 0)
+                {
+                    anim.SetTrigger("AttackA");
+                    attacking = true;
+                }
+                else
+                {
+                    anim.SetTrigger("AttackB");
+                    attacking = true;
+                }
             }
         }
-
     }
+
+    public override void RetreatSubroutine()
+    {
+        if (!attacking)
+        {
+            base.RetreatSubroutine();
+        }
+    }
+
+    public void SetAttacking(bool val) => attacking = val;
 }
 
 #if UNITY_EDITOR

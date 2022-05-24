@@ -4,6 +4,7 @@ using Cinemachine;
 public class PlayerMainStateManager : MonoBehaviour
 {
     public bool lockedOn = false;
+    public bool hurt = false;
     public bool ragdolled = false;
     public bool attacking = false;
     public bool grounded = false;
@@ -92,6 +93,15 @@ public class PlayerMainStateManager : MonoBehaviour
             sprinting = false;
             lockedOn = false;
             anim.SetLayerWeight(strafeLayerID, 0);
+        }
+
+        if (hurt)
+        {
+            tpc.DisableCharacter();
+            tpc.SetRotation(false);
+            anim.SetLayerWeight(strafeLayerID, 0);
+            anim.SetLayerWeight(groundedAttackLayerID, 0);
+            return;
         }
 
         float layerWeight = anim.GetLayerWeight(strafeLayerID);

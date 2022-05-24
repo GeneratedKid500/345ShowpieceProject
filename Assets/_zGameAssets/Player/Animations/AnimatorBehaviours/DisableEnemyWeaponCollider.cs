@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisableEnemyAttackingBool : StateMachineBehaviour
+public class DisableEnemyWeaponCollider : StateMachineBehaviour
 {
-    DuelMove duelAI;
     SwordCollider col;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (duelAI == null) duelAI = animator.transform.root.GetComponent<DuelMove>();
-
         if (col == null)
         {
             SwordCollider[] cols = animator.GetComponentsInChildren<SwordCollider>();
@@ -24,7 +21,6 @@ public class DisableEnemyAttackingBool : StateMachineBehaviour
             }
         }
 
-        duelAI.SetAttacking(false);
         col.GetCollider().enabled = false;
     }
 }

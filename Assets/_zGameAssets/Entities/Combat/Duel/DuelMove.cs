@@ -11,13 +11,15 @@ public class DuelMove : EnemyMovement
     private float timePassed;
     private bool attacking;
 
-    private float newMoveTime = 0.5f;
+    [SerializeField] private float timeBetweenMoves = 0.5f;
     private float timeSinceNewMove;
     private Vector3 newMoveDir; 
 
     public override void AttackSubroutine()
     {
         //base.AttackSubroutine();
+
+        targeting = true;
 
         if (anim.GetFloat("Targeting") < 1)
         {
@@ -26,17 +28,19 @@ public class DuelMove : EnemyMovement
 
         if (!attacking)
         {
-            Random.Range(-2.0f, 2.0f);
+            agent.enabled = true;
+            agent.isStopped = false;
+            RotateToTarget(currentTarget, 15);
 
             if (newMoveDir != null) agent.SetDestination(newMoveDir);
             else agent.SetDestination(transform.position);
 
             timeSinceNewMove += Time.fixedDeltaTime;
-            if (timeSinceNewMove > newMoveTime)
+            if (timeSinceNewMove > timeBetweenMoves)
             {
                 timeSinceNewMove = 0;
                 float rand = (Random.Range(-stoppingDistance/3, stoppingDistance/3));
-                newMoveDir = (currentTarget.forward*stoppingDistance)  * rand;
+                newMoveDir = (currentTarget.forward * stoppingDistance)  * rand;
                 AlterSpeed(rand);
             }
 
@@ -53,11 +57,19 @@ public class DuelMove : EnemyMovement
                 {
                     anim.SetTrigger("Attack 2");
                 }
+                attacking = true;
             }
         }
         else
         {
-            agent.SetDestination(transform.position);
+            if (agent.enabled)
+            {
+                agent.isStopped = true;
+                agent.SetDestination(transform.position);
+                agent.enabled = false;
+            }
+
+            timeSinceNewMove = timeBetweenMoves;
         }
     }
 
@@ -65,9 +77,14 @@ public class DuelMove : EnemyMovement
 
     public override void RetreatSubroutine()
     {
-        base.RetreatSubroutine();
+        if (!attacking)
+        {
+            targeting = false;
 
-        anim.SetFloat("Targeting", 0);
+            base.RetreatSubroutine();
+
+            anim.SetFloat("Targeting", 0);
+        }
     }
 }
 

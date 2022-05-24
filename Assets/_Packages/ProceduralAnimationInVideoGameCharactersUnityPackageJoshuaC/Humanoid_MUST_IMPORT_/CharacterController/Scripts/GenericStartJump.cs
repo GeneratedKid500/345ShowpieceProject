@@ -25,7 +25,7 @@ public class GenericStartJump : MonoBehaviour
     private void OnAnimatorMove()
     {
         Vector3 deltaPos = anim.deltaPosition;
-        if (pmsm.attacking)
+        if (pmsm.attacking || pmsm.hurt)
         {
             transform.parent.rotation = anim.rootRotation;
             deltaPos.y = 0f;

@@ -75,40 +75,41 @@ public abstract class EnemyMovement : MonoBehaviour
         if (roo.ragdolled) return;
 
         #region Enemy Detection
+        if (currentTarget == transform) NextWaypoint();
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, sightRadius, detectionLayer);
         for (int i = 0; i < colliders.Length; i++)
         {
-            if (colliders[i].tag != transform.tag)
+            if (currentTarget.tag != "Player")
             {
-                canSeeTarget = Sight(colliders[i].transform);
+                if (colliders[i].tag != transform.tag && colliders[i].tag != "Untagged")
+                {
+                    canSeeTarget = Sight(colliders[i].transform);
+                }
             }
 
             if (currentTarget.tag != "Waypoint" && colliders[i].tag == transform.tag)
             {
-                //colliders[i].GetComponent<EnemyMovement>().LocalAlert(colliders[i].transform);
+                colliders[i].GetComponent<EnemyMovement>().LocalAlert(colliders[i].transform);
             }
 
         }
         #endregion
 
         // if close enough to target
-        if (currentTarget.tag != "Waypoint" && agent.enabled)
+        if (currentTarget.tag != "Waypoint")
         {
             if (targetDistance > sightRadius * inSightRadiusIncrease)
             {
-                Debug.Log("Change");
                 NextWaypoint();
             }
 
-            if (targetDistance <= stoppingDistance)
+            if (targetDistance < stoppingDistance)
             {
-                // show weapon
-
                 AttackSubroutine();
             }
             else
             {
-
                 RetreatSubroutine();
             }
         }
@@ -118,6 +119,9 @@ public abstract class EnemyMovement : MonoBehaviour
     {
         targeting = true;
 
+        RotateToTarget(currentTarget);
+
+        agent.enabled = true;
         agent.SetDestination(transform.position);
         agent.isStopped = true;
     }
@@ -126,6 +130,7 @@ public abstract class EnemyMovement : MonoBehaviour
     {
         targeting = false;
 
+        agent.enabled = true;
         agent.isStopped = false;
         agent.SetDestination(currentTarget.position);
     }
@@ -136,16 +141,23 @@ public abstract class EnemyMovement : MonoBehaviour
 
         if (!roo.ragdolled && enableMove)
         {
-            agent.enabled = true;
-            agent.isStopped = false;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
 
-            AlterSpeed();
+            if (!targeting)
+            {
+                agent.enabled = true;
+                agent.isStopped = false;
+
+                AlterSpeed();
+            }
 
             MoveToWaypoint();
             MoveToTarget();
         }
         else
         {
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+
             if (agent.enabled)
             {
                 agent.speed = 0;
@@ -199,7 +211,10 @@ public abstract class EnemyMovement : MonoBehaviour
             travellingToWaypoint = true;
         }
 
-        agent.SetDestination(currentTarget.position);
+        if (agent.enabled)
+        {
+            agent.SetDestination(currentTarget.position);
+        }
     }
 
     protected void MoveToWaypoint()
@@ -220,7 +235,7 @@ public abstract class EnemyMovement : MonoBehaviour
     {
         if (!travellingToWaypoint)
         {
-            RotateToTarget(currentTarget);
+            //RotateToTarget(currentTarget);
         }
     }
 
@@ -247,13 +262,18 @@ public abstract class EnemyMovement : MonoBehaviour
     }
     #endregion
 
-    public void RotateToTarget(Transform target)
+    public void RotateToTarget(Transform target, float rotateSpeedOverride = -1)
     {
+        if (rotateSpeedOverride == -1)
+        {
+            rotateSpeedOverride = rotationSpeed;
+        }
+
         Vector3 directionToTarget = target.position - transform.position;
         float angleToTarget = Mathf.Atan2(directionToTarget.x, directionToTarget.z) * Mathf.Rad2Deg;
 
         Quaternion desiredRot = Quaternion.Euler(transform.eulerAngles.x, angleToTarget, transform.eulerAngles.z);
-        transform.rotation = Quaternion.Slerp(Quaternion.Euler(transform.eulerAngles), desiredRot, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(Quaternion.Euler(transform.eulerAngles), desiredRot, rotateSpeedOverride * Time.deltaTime);
     }
 
     #region Enemy Detection - Sight & LocalAlert
@@ -266,35 +286,37 @@ public abstract class EnemyMovement : MonoBehaviour
         {
             if (target.GetComponent<HealthSystem>() != null)
             {
-                Vector3 targetDir = (target.transform.position - transform.position).normalized;   
+                Vector3 targetDir = (target.transform.position - transform.position);
+                targetDir.y = 0;
 
                 Debug.DrawRay(transform.position, targetDir*sightRadius, Color.yellow);
                 if (Physics.Raycast(transform.position, targetDir, out RaycastHit hit, sightRadius))
                 {
-                    if (hit.transform.tag == target.tag)
+                    if (hit.transform.root.tag == target.root.tag)
                     {
                         NextWaypoint(target);
                         return true;
                     }
                     else
                     {
-                        Debug.Log("No tag");
-                        Debug.Log("Hit tag: " + hit.transform.tag);
+                        //Debug.Log("No tag");
+                        //Debug.Log("Hit tag: " + hit.transform.tag);
                     }
                 }
                 else
                 {
-                    Debug.Log("No Ray");
+                    //Debug.Log("No Ray");
+                    //Debug.Log("Ray:" + hit.transform.root.tag);
                 }
             }
             else
             {
-                Debug.Log("No Health");
+                //Debug.Log("No Health");
             }
         }
         else
         {
-            Debug.Log("No Detect");
+            //Debug.Log("No Detect");
         }
 
         return false;

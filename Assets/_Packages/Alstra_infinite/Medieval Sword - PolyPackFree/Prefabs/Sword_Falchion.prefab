@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3097144422817150975}
   - component: {fileID: 2113489927585282138}
   - component: {fileID: 4228995145963850896}
+  - component: {fileID: -4783188586057098441}
   m_Layer: 0
   m_Name: Sword_Falchion
   m_TagString: DoNotBlend
@@ -25,15 +26,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2427603880065461573}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.16068834, y: 0.241364, z: 0.68761355, w: -0.66566527}
+  m_LocalPosition: {x: 0.169, y: 0.125, z: 0.082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6412136646768942963}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 213.08301, y: 173.121, z: -269.813}
 --- !u!33 &2113489927585282138
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2d0375d2bac42784e8dcb4bb60ce2f6a, type: 2}
+  - {fileID: 2100000, guid: a8bfec2fb2d38c640a4dc2e55570f0b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +85,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-4783188586057098441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427603880065461573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac922c921c423444927e70081e004fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: The Falchion
+  weaponDesc: Once wielded by the legendary hero king
+  weaponPrefab: {fileID: 2427603880065461573}
+  weaponRenderer: {fileID: 4228995145963850896}
+  weapon: {fileID: 11400000, guid: ab3a82654ff0a564db31305d6ab9955a, type: 2}
+  weaponSlot: 0
 --- !u!1 &8138412245901498220
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  root: {fileID: 0}
   coll: {fileID: 0}
   location: 
 --- !u!65 &8080016193907869240

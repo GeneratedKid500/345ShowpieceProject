@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca79e9b98da98374298e7d59f2aaf346, type: 3}
+  m_Name: Cheese
+  m_EditorClassIdentifier: 
+  fileName: 1
+  itemModel: {fileID: 100000, guid: 47365cc78e5cfad41badc534e3d2b7e1, type: 3}
+  itemPrefab: {fileID: 1000452844972418373, guid: 9f6875cd90d8a7748b747996b4a481c6, type: 3}
+  icon: {fileID: 21300000, guid: 330f227b1bc211b43b1690d505b16e03, type: 3}
+  itemName: Cheese
+  itemDescription: Cheese, but not in the shape of a wheel. Restores 15 HP
+  consumable: 1
+  forHealing: 1
+  hpValue: 15
+  maxStackQuantity: 15

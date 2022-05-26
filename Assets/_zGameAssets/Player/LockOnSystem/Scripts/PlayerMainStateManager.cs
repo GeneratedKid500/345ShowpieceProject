@@ -3,6 +3,8 @@ using Cinemachine;
 
 public class PlayerMainStateManager : MonoBehaviour
 {
+    public bool paused = false;
+    [Space]
     public bool lockedOn = false;
     public bool hurt = false;
     public bool ragdolled = false;
@@ -12,6 +14,7 @@ public class PlayerMainStateManager : MonoBehaviour
 
     private RagdollOnOff rgd;
     private PlayerActionDistributor ad;
+    private WeaponLoader wLoader;
 
     [Header("Cameras")]
     [SerializeField] CinemachineVirtualCameraBase freeCam;
@@ -74,10 +77,13 @@ public class PlayerMainStateManager : MonoBehaviour
         tpc = GetComponent<ThirdPersonControl>();
 
         lom = GetComponent<LockOnMovement>();
+
+        wLoader = GetComponent<WeaponLoader>();
     }
 
     void Start()
     {
+
         freeCam.gameObject.SetActive(false);
     }
 
@@ -87,6 +93,8 @@ public class PlayerMainStateManager : MonoBehaviour
         ragdolled = rgd.ragdolled;
         attacking = ad.attacking;
         ad.canInput = !ragdolled;
+
+        if (paused) return;
 
         if (ragdolled)
         {
@@ -114,6 +122,7 @@ public class PlayerMainStateManager : MonoBehaviour
 
             if (tpc.Grounded)
             {
+                wLoader.FadeInWeapon();
                 // enables lock-on camera
                 if (freeCam.gameObject.activeSelf)
                 {
@@ -151,17 +160,20 @@ public class PlayerMainStateManager : MonoBehaviour
             // disables character movement when attacking
             if (attacking)
             {
+                wLoader.FadeInWeapon();
                 tpc.DisableCrouching();
                 tpc.DisableCharacter();
             }
             else
             {
+                wLoader.FadeOutWeapon();
                 tpc.EnableCharacter();
             }
 
             // enables regular camera
             if (!freeCam.gameObject.activeSelf && !attacking)
             {
+
                 freeCam.gameObject.SetActive(true);
                 freeLook.m_RecenterToTargetHeading.m_enabled = false;
                 zTargetCam.gameObject.SetActive(false);
@@ -240,5 +252,16 @@ public class PlayerMainStateManager : MonoBehaviour
             anim.SetLayerWeight(airAttackLayerID, 1);
         }
 
+    }
+
+    public void RestartAnimator()
+    {
+        anim.updateMode = AnimatorUpdateMode.UnscaledTime;
+        anim.enabled = false;
+        anim.enabled = true;
+        anim.updateMode = AnimatorUpdateMode.Normal;
+
+        anim.gameObject.SetActive(false);
+        anim.gameObject.SetActive(true);
     }
 }

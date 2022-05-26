@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6321124a285e4b24dbb8faa707cbf172, type: 3}
   m_Name: Greatsword
   m_EditorClassIdentifier: 
-  weaponName: Greatsword
-  modelPrefab: {fileID: 0}
-  damage: 0
+  weaponType: Greatsword
   lightAttacks:
   - Greatsword Light Attack 1
   - Greatsword Light Attack 2

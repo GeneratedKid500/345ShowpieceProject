@@ -9,8 +9,6 @@ public class SwordCollider : MonoBehaviour
 
     [SerializeField] string location = "";
 
-    private bool hasHit = false;
-
     private List<HealthSystem> targetsHit;
 
     private float attackKnockbackStrength;

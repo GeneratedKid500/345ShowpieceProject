@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca79e9b98da98374298e7d59f2aaf346, type: 3}
+  m_Name: Watermelon
+  m_EditorClassIdentifier: 
+  fileName: 1
+  itemModel: {fileID: 100000, guid: 7977e423937da9b48aac1866c67bb5be, type: 3}
+  itemPrefab: {fileID: 2302835207935209091, guid: 3b30be5a4c38d474481082f07cbf062f, type: 3}
+  icon: {fileID: 21300000, guid: f4ea7dffed10162489597d6922f81a17, type: 3}
+  itemName: Watermelon
+  itemDescription: A large, fresh, juicy, fresh, large Watermelon. Restores 50 HP
+  consumable: 1
+  forHealing: 1
+  hpValue: 50
+  maxStackQuantity: 15

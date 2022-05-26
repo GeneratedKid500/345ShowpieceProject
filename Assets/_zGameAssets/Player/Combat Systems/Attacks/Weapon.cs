@@ -9,9 +9,7 @@ using UnityEditor;
 public class Weapon : ScriptableObject
 {
     [Header("Weapon Information")]
-    public string weaponName;
-    public GameObject modelPrefab;
-    public int damage;
+    public string weaponType;
 
     [Header("Attack Animations")]
     public string[] lightAttacks = new string[3];
@@ -48,7 +46,7 @@ public class Weapon : ScriptableObject
     private void OnValidate()
     {
         string path = AssetDatabase.GetAssetPath(this.GetInstanceID());
-        weaponName = Path.GetFileNameWithoutExtension(path);
+        weaponType = Path.GetFileNameWithoutExtension(path);
     }
 #endif
 

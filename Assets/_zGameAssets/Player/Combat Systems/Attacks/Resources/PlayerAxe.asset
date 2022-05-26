@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6321124a285e4b24dbb8faa707cbf172, type: 3}
+  m_Name: PlayerAxe
+  m_EditorClassIdentifier: 
+  weaponType: PlayerAxe
+  lightAttacks:
+  - PlayerAxe Light Attack 1
+  - PlayerAxe Light Attack 2
+  sprintLight: PlayerAxe Sprint Attack
+  heavyAttacks:
+  - PlayerAxe Heavy Attack 1
+  - PlayerAxe Heavy Attack 2
+  - PlayerAxe Heavy Attack 3
+  sprintHeavy: PlayerAxe Sprint Attack
+  airAttacks:
+  - Greatsword Air Attack 1
+  - Greatsword Air Attack 2
+  combo:
+  - PlayerAxe Light Attack 1
+  - PlayerAxe Light Attack 2

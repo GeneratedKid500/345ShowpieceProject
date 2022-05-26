@@ -11,6 +11,7 @@ TagManager:
   - Swarm
   - Enemy
   - Waypoint
+  - Model
   layers:
   - Default
   - TransparentFX

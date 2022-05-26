@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7aadf6c479b0149a5e6903c159928a, type: 3}
+  m_Name: Inventory
+  m_EditorClassIdentifier: 
+  maxInventorySize: 30
+  itemSlots:
+  - itemObject: {fileID: 11400000, guid: d59667e058796c5469617f53b1f7ec98, type: 2}
+    stackQuantity: 6
+  - itemObject: {fileID: 11400000, guid: e99200b117e5a364ba212b7377724b17, type: 2}
+    stackQuantity: 15
+  - itemObject: {fileID: 11400000, guid: 60b47d96940d6794baf3c28bdf720593, type: 2}
+    stackQuantity: 3
+  - itemObject: {fileID: 11400000, guid: 1a1b727b89f2b0f43a1d6aeba8358aeb, type: 2}
+    stackQuantity: 15
+  - itemObject: {fileID: 11400000, guid: 9a21f017a5f22a945acc8230755354ea, type: 2}
+    stackQuantity: 15
+  - itemObject: {fileID: 11400000, guid: 1a1b727b89f2b0f43a1d6aeba8358aeb, type: 2}
+    stackQuantity: 1
+  - itemObject: {fileID: 11400000, guid: 4a385c681c4d6914282d1c423547de6e, type: 2}
+    stackQuantity: 6
+  - itemObject: {fileID: 11400000, guid: 9a21f017a5f22a945acc8230755354ea, type: 2}
+    stackQuantity: 1
+  - itemObject: {fileID: 11400000, guid: e99200b117e5a364ba212b7377724b17, type: 2}
+    stackQuantity: 4
+  - itemObject: {fileID: 11400000, guid: dc51f957241062b43be4a8bf98861769, type: 2}
+    stackQuantity: 14

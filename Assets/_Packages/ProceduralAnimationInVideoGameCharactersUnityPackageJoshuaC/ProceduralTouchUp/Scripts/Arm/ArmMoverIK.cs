@@ -166,4 +166,18 @@ public class ArmMoverIK : MonoBehaviour
 
     public void EnableArmIK() => ikActive = true;
     public void DisableArmIK() => ikActive = false;
+
+    public void NewOrigin()
+    {
+        GameObject temp = GameObject.Find("mixamorig:Head");
+        if (temp.transform.IsChildOf(transform))
+        {
+            rayOrigin = temp.transform;
+        }
+        else
+        {
+            Debug.LogError("ARM MOVER: NEW ORIGIN NOT CHILD");
+        }
+
+    }
 }

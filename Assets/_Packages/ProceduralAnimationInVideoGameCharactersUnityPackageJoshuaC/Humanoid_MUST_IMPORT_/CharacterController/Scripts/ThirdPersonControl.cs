@@ -648,6 +648,7 @@ public class ThirdPersonControl : MonoBehaviour
             enableAnim = false;
         }
     }
+
     // can be referenced by anything to end game
     public void ExitGame()
     {

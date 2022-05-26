@@ -14,6 +14,8 @@ public class HealthSystem : MonoBehaviour
     RagdollOnOff ragdoll;
 
     bool alreadyHitByThisAnimation = false;
+    [SerializeField] float timeUntilRemoveAtDeath = 2f;
+    float deathTimer;
 
     [SerializeField] float health = 100;
     float currenthealth;
@@ -32,7 +34,19 @@ public class HealthSystem : MonoBehaviour
 
     void Update()
     {
-        
+        if (!onPlayer && currenthealth <= 0 && ragdoll.ragdolled)
+        {
+            deathTimer += Time.deltaTime;
+            if (deathTimer > timeUntilRemoveAtDeath)
+            {
+                int rand = Random.Range(0, 5);
+                if (rand == 4)
+                {
+                    GetComponent<EnemyDrops>().Drop();
+                }
+                gameObject.SetActive(false);
+            }
+        }
     }
 
     public void TakeDamage(Transform source, float strength, int damage, bool heavy)
@@ -75,8 +89,7 @@ public class HealthSystem : MonoBehaviour
             currenthealth = 0;
 
             ragdoll.RagdollToggle(true);
-
-            //die
+            ragdoll.ToggleAutoStand(1);
         }
         else
         {
@@ -87,6 +100,21 @@ public class HealthSystem : MonoBehaviour
     public void ResetAlreadyHitBool()
     {
         alreadyHitByThisAnimation = false;
+    }
+
+    public float GetMaxHP()
+    {
+        return health;
+    }
+
+    public float GetHP()
+    {
+        return currenthealth;
+    } 
+
+    public void AddHP(int amount)
+    {
+        currenthealth = Mathf.Min(currenthealth + amount, health);
     }
 
 }

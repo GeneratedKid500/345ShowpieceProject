@@ -96,6 +96,12 @@ public class RagdollOnOff : MonoBehaviour
         {
             rb.isKinematic = true;
         }
+
+        if (onPlayer)
+        {
+            if (cinemachineCam == null) cinemachineCam = GameObject.Find("FreeLookCamera").GetComponent<CinemachineFreeLook>();
+            if (inactiveTarget == null) inactiveTarget = hips;
+        }
     }
 
     void Start()
@@ -343,6 +349,44 @@ public class RagdollOnOff : MonoBehaviour
         foreach (Rigidbody rb in limbRigidbodies)
         {
             rb.AddForce(force / limbRigidbodies.Length, ForceMode.Impulse);
+        }
+    }
+
+    public void GetNewHips()
+    {
+        hips = transform.Find("BodyContainer(Clone)").Find("mixamorig:Hips");
+        activeTarget = hips;
+
+        limbColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider limb in limbColliders)
+        {
+            limb.isTrigger = true;
+            limb.enabled = false;
+        }
+        limbRigidbodies = GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody rb in limbRigidbodies)
+        {
+            rb.isKinematic = true;
+        }
+
+        bodyParts = hips.GetComponentsInChildren<Transform>();
+        storedPositions = new Vector3[bodyParts.Length];
+        storedRotations = new Quaternion[bodyParts.Length];
+    }
+
+    public void ToggleAutoStand(int i = -1)
+    {
+        if (i == -1)
+        {
+            pressToStand = !pressToStand;
+        }
+        else if (i == 0)
+        {
+            pressToStand = false;
+        }
+        else
+        {
+            pressToStand = true;
         }
     }
 

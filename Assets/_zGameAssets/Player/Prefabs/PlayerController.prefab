@@ -226,7 +226,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794093499131385574}
-  m_LocalRotation: {x: 0.06430789, y: -0.0000000081917895, z: 0.0000000026285885, w: 0.9979301}
+  m_LocalRotation: {x: 0.06430789, y: 0.0000000081917895, z: -0.0000000026285885, w: 0.9979301}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -834,7 +834,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794093499905374724}
-  m_LocalRotation: {x: 0.10051521, y: 0.000000008090902, z: -0.000000002924421, w: 0.9949356}
+  m_LocalRotation: {x: 0.10051521, y: -0.000000008090897, z: 0.0000000029244196, w: 0.9949356}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1567,7 +1567,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794093500728875763}
-  m_LocalRotation: {x: -0.036458567, y: -0.000000015781877, z: 0.0000000063054273, w: 0.9993352}
+  m_LocalRotation: {x: -0.036458567, y: 0.00000001624359, z: -0.0000000062885315, w: 0.9993352}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1794,7 +1794,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1442547973840650948}
-  m_LocalRotation: {x: 0.12276428, y: -0, z: -0, w: 0.9924359}
+  m_LocalRotation: {x: 0.20412472, y: -2.2614172e-10, z: -4.7179358e-11, w: 0.9789449}
   m_LocalPosition: {x: 0, y: 1.9000001, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1827,7 +1827,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 49.06335
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -2087,6 +2087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockedOn: 0
+  hurt: 0
   ragdolled: 0
   attacking: 0
   grounded: 0

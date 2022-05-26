@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  root: {fileID: 0}
   coll: {fileID: 0}
   location: 
 --- !u!65 &2842791656678882156
@@ -71,6 +72,7 @@ GameObject:
   - component: {fileID: 7666448512491849803}
   - component: {fileID: 7666448512490555499}
   - component: {fileID: 7666448512489556651}
+  - component: {fileID: 8140003395143570265}
   m_Layer: 0
   m_Name: PP_Sword_0018
   m_TagString: DoNotBlend
@@ -85,15 +87,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7666448512491557995}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0.15460277, y: -0.23546967, z: -0.68900776, w: 0.66777265}
+  m_LocalPosition: {x: 0.134, y: 0.126, z: 0.078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8429777582701838213}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -32.07, y: -6.875, z: -89.815}
 --- !u!33 &7666448512490555499
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -122,7 +124,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d6557e923d42c52428cd5a810511e352, type: 2}
+  - {fileID: 2100000, guid: c4cfa15c5661cd34791ee7f05314a2d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -144,3 +146,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8140003395143570265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7666448512491557995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac922c921c423444927e70081e004fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: The 13th Blade
+  weaponDesc: Forged on the 40th Day by the 12th Disciple
+  weaponPrefab: {fileID: 7666448512491557995}
+  weaponRenderer: {fileID: 7666448512489556651}
+  weapon: {fileID: 11400000, guid: ab3a82654ff0a564db31305d6ab9955a, type: 2}
+  weaponSlot: 0

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 1105029940681321520}
   - component: {fileID: 4105595612835357589}
   - component: {fileID: 2242500406135805791}
+  - component: {fileID: 8085384106069532873}
   m_Layer: 0
   m_Name: Sword_Viking
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,15 +26,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 296685950254937738}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.16068834, y: 0.241364, z: 0.68761355, w: -0.66566527}
+  m_LocalPosition: {x: 0.169, y: 0.125, z: 0.082}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1911957625028971665}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 213.08301, y: 173.121, z: -269.813}
 --- !u!33 &4105595612835357589
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2d0375d2bac42784e8dcb4bb60ce2f6a, type: 2}
+  - {fileID: 2100000, guid: a8bfec2fb2d38c640a4dc2e55570f0b0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +85,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8085384106069532873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296685950254937738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac922c921c423444927e70081e004fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Viking's Blade
+  weaponDesc: A measly blade used as a Viking's Pocket Knife
+  weaponPrefab: {fileID: 296685950254937738}
+  weaponRenderer: {fileID: 2242500406135805791}
+  weapon: {fileID: 11400000, guid: ab3a82654ff0a564db31305d6ab9955a, type: 2}
+  weaponSlot: 0
 --- !u!1 &2600413116977705881
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +116,7 @@ GameObject:
   - component: {fileID: 3536980340800555055}
   m_Layer: 0
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: DoNotBlend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,5 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  root: {fileID: 0}
   coll: {fileID: 0}
   location: 

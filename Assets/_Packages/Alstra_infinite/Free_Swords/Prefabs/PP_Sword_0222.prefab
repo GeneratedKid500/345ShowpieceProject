@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5193304468136068790}
   - component: {fileID: 5193304468133201558}
   - component: {fileID: 5193304468134167638}
+  - component: {fileID: 1255076160788733922}
   m_Layer: 0
   m_Name: PP_Sword_0222
   m_TagString: DoNotBlend
@@ -25,8 +26,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5193304468136172182}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.15460283, y: 0.23546986, z: 0.6890079, w: -0.66777253}
+  m_LocalPosition: {x: 0.414, y: 0.127, z: 0.111}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d6557e923d42c52428cd5a810511e352, type: 2}
+  - {fileID: 2100000, guid: c4cfa15c5661cd34791ee7f05314a2d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -84,6 +85,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1255076160788733922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5193304468136172182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac922c921c423444927e70081e004fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Greatest Sword
+  weaponDesc: '''The best sword ever made'' - The guy who sold me this sword'
+  weaponPrefab: {fileID: 5193304468136172182}
+  weaponRenderer: {fileID: 5193304468134167638}
+  weapon: {fileID: 11400000, guid: ab3a82654ff0a564db31305d6ab9955a, type: 2}
+  weaponSlot: 0
 --- !u!1 &7294131005859416228
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e926e01f85f30a7489b4fef83b1d90f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  root: {fileID: 0}
   coll: {fileID: 0}
   location: 
 --- !u!65 &6484007799196190445

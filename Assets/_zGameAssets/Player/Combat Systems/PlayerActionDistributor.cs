@@ -9,6 +9,7 @@ public class PlayerActionDistributor : MonoBehaviour
     public bool canInput;
 
     private PlayerMainStateManager pmsm;
+    private WeaponLoader weaponLoader;
     private Transform cam;
     private Vector3 playerOrientation;
 
@@ -24,6 +25,10 @@ public class PlayerActionDistributor : MonoBehaviour
     [Space]
     [SerializeField] private string dodgeButton1;
     [SerializeField] private string dodgeButton2;
+    [Space]
+    [SerializeField] private string swapWeapon1;
+    [SerializeField] private string swapWeapon2;
+
 
     [Header("Input List Settings")]
     [SerializeField] private float maximumTimeBetweenInputs = 0.2f;
@@ -37,6 +42,10 @@ public class PlayerActionDistributor : MonoBehaviour
 
     private Weapon[] weapons;
     private int currentWeapon;
+
+    private bool weapon2 = false;
+    private bool weapon3 = false;
+
     bool waitingForTransition = false;
     string animationToTransitionInto = null;
 
@@ -45,6 +54,7 @@ public class PlayerActionDistributor : MonoBehaviour
         pmsm = GetComponent<PlayerMainStateManager>();
         cam = Camera.main.transform;
         anim = GetComponentInChildren<Animator>();
+        weaponLoader = GetComponent<WeaponLoader>();
 
         inputList = new List<int> { };
 
@@ -121,6 +131,11 @@ public class PlayerActionDistributor : MonoBehaviour
             {
                 AddButtonInput(104);
             }
+
+            if (Input.GetButtonDown(swapWeapon1) || Input.GetButtonDown(swapWeapon2))
+            {
+                AddButtonInput(105);
+            }
             #endregion
         }
         else
@@ -192,6 +207,11 @@ public class PlayerActionDistributor : MonoBehaviour
 
                 break;
 
+            case 105:
+                // weapon switch
+                SwitchWeapon();
+                break;
+
             default: break;
         }
 
@@ -211,7 +231,6 @@ public class PlayerActionDistributor : MonoBehaviour
         {
             if (comboStep > 1) comboStep = 0;
 
-            //anim.CrossFade(weapons[currentWeapon].airAttacks[comboStep], 0.1f);
             animationToTransitionInto = weapons[currentWeapon].airAttacks[comboStep];
 
             comboStep++;
@@ -221,12 +240,10 @@ public class PlayerActionDistributor : MonoBehaviour
             switch (input)
             {
                 case 101:
-                    //anim.CrossFade(weapons[currentWeapon].sprintLight, 0.1f);
                     animationToTransitionInto = weapons[currentWeapon].sprintLight;
                     break;
 
                 case 102:
-                    //anim.CrossFade(weapons[currentWeapon].sprintHeavy, 0.1f);
                     animationToTransitionInto = weapons[currentWeapon].sprintHeavy;
                     break;
             }
@@ -236,7 +253,7 @@ public class PlayerActionDistributor : MonoBehaviour
             switch (input)
             {
                 case 101:
-                    //anim.CrossFade(weapons[currentWeapon].combo[comboStep], 0.1f);
+                    Debug.Log(weapons[currentWeapon].combo[comboStep]);
                     animationToTransitionInto = weapons[currentWeapon].combo[comboStep];
                     if (comboStep >= weapons[currentWeapon].combo.Length - 1)
                     {
@@ -251,21 +268,17 @@ public class PlayerActionDistributor : MonoBehaviour
                 case 102:
                     if (comboStep == 0)
                     {
-                        if (anim.GetCurrentAnimatorStateInfo(3).IsName(weapons[currentWeapon].weaponName + " Light Attack " + (weapons[currentWeapon].lightAttacks.Length).ToString()))
+                        if (anim.GetCurrentAnimatorStateInfo(3).IsName(weapons[currentWeapon].weaponType + " Light Attack " + (weapons[currentWeapon].lightAttacks.Length).ToString()))
                         {
-                            //anim.CrossFade(weapons[currentWeapon].heavyAttacks[weapons[currentWeapon].lightAttacks.Length], 0.1f);
                             animationToTransitionInto = weapons[currentWeapon].heavyAttacks[weapons[currentWeapon].lightAttacks.Length];
                         }
                         else
                         {
-                            //anim.CrossFade(weapons[currentWeapon].heavyAttacks[0], 0.1f);
                             animationToTransitionInto = weapons[currentWeapon].heavyAttacks[0];
                         }
                     }
                     else
                     {
-                        //string atk = weapons[currentWeapon].FindHeavyAttack(comboStep);
-                        //anim.CrossFade(atk, 0.1f);
                         animationToTransitionInto = weapons[currentWeapon].FindHeavyAttack(comboStep);
                         comboStep = 0;
                     }
@@ -290,6 +303,51 @@ public class PlayerActionDistributor : MonoBehaviour
         inputList.Add(input);
     }
     
+    void SwitchWeapon()
+    {
+        if (attacking) return;
+
+        switch (currentWeapon) 
+        {
+            case 0:
+                if (weapon2)
+                {
+                    currentWeapon = 1;
+                }
+                else if (weapon3)
+                {
+                    currentWeapon = 2;
+                }
+                break;
+
+            case 1:
+                if (weapon3)
+                {
+                    currentWeapon = 2;
+                }
+                else
+                {
+                    currentWeapon = 0;
+                }
+                break;
+
+            case 2:
+                currentWeapon = 0;
+                break;
+        }
+        weaponLoader.SwapWeapons(currentWeapon);
+
+    }
+
+    public void ActivateWeapon(int i)
+    {
+        if (i == 2)
+        {
+            weapon2 = true;
+        }
+        else weapon3 = true;
+    }
+
     public void DisableAttack()
     {
         attacking = false;

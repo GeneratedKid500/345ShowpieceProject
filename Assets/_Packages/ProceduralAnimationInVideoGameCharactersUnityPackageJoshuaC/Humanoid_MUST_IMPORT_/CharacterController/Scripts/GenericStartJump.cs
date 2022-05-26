@@ -24,18 +24,22 @@ public class GenericStartJump : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        Vector3 deltaPos = anim.deltaPosition;
-        if (pmsm.attacking || pmsm.hurt)
+        if (!pmsm.paused)
         {
-            transform.parent.rotation = anim.rootRotation;
-            deltaPos.y = 0f;
-            transform.parent.position += deltaPos;
+            Vector3 deltaPos = anim.deltaPosition;
+            if (pmsm.attacking || pmsm.hurt)
+            {
+                transform.parent.rotation = anim.rootRotation;
+                deltaPos.y = 0f;
+                transform.parent.position += deltaPos;
+            }
+            else
+            {
+                float delta = Time.deltaTime;
+                Vector3 vel = deltaPos / delta;
+                //fpControl.ApplyRootMotion(vel);
+            }
         }
-        else
-        {
-            float delta = Time.deltaTime;
-            Vector3 vel = deltaPos / delta;
-            fpControl.ApplyRootMotion(vel);
-        }
+
     }
 }

@@ -47,13 +47,13 @@ public class SwordCollider : MonoBehaviour
             Debug.Log(target.transform.root.name);
             targetsHit.Add(target);
             target.TakeDamage(root, attackKnockbackStrength, attackDamage, isHeavy);
-            if (isOnPlayer && !stop)
-            {
-                stop = false;
-                Time.timeScale = 0;
+            //if (isOnPlayer && !stop)
+            //{
+            //    stop = false;
+            //    Time.timeScale = 0;
 
-                StartCoroutine("ReturnTimeScale");
-            }
+            //    //StartCoroutine("ReturnTimeScale");
+            //}
         }
     }
 

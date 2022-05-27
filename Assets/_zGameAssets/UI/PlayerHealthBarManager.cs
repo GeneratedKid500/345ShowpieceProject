@@ -4,6 +4,8 @@ using TMPro;
 
 public class PlayerHealthBarManager : MonoBehaviour
 {
+    [SerializeField] AudioClip deadClip;
+
     [Header("Player HP Bar")]
     [SerializeField] GameObject healthBar;
     [SerializeField] Slider healthBarSlider;
@@ -41,7 +43,7 @@ public class PlayerHealthBarManager : MonoBehaviour
 
         if (weaponSwitch.alpha > 0)
         {
-            weaponSwitch.alpha = Mathf.Lerp(lowHPWarning.alpha, 0, Time.deltaTime/2);
+            weaponSwitch.alpha = Mathf.Lerp(weaponSwitch.alpha, 0, Time.deltaTime/2);
         }
 
         if (playerHP.GetHP() <= 0)
@@ -49,8 +51,16 @@ public class PlayerHealthBarManager : MonoBehaviour
             healthBarSlider.fillRect.gameObject.SetActive(false);
             deadHPWarning.alpha = Mathf.Lerp(deadHPWarning.alpha, 1.1f, Time.deltaTime*2);
 
-            timer += Time.deltaTime;
-            if (timer > 10)
+            AudioSource[] s = GameObject.FindGameObjectWithTag("Player").GetComponents<AudioSource>();
+
+            s[1].Stop();
+            s[0].Stop();
+            s[0].clip = deadClip;
+            s[0].volume = 1;
+            s[0].Play();
+
+            timer += Time.unscaledDeltaTime;
+            if (timer > 10 || Input.GetButtonDown("Options") || Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("TouchPad"))
             {
                 Application.Quit();
             }

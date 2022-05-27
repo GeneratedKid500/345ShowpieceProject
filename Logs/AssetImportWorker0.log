@@ -5171,3 +5171,31 @@ Received Import Request.
   path: Assets/Scenes/FinalScene.unity
   artifactKey: Guid(686373eab9e28024caba74fa645744f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/Scenes/FinalScene.unity using Guid(686373eab9e28024caba74fa645744f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36e62b0a73b8431ab7ea606c84874e1b') in 0.026002 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 398.398066 seconds.
+  path: Assets/_zGameAssets/Music/01_LOOP_COOL_ENOUGH.wav
+  artifactKey: Guid(aa80461651b20d94dafb44fa407e7671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_zGameAssets/Music/01_LOOP_COOL_ENOUGH.wav using Guid(aa80461651b20d94dafb44fa407e7671) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52ac21aeafcc1538683cbfd01c42c303') in 0.066102 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/_zGameAssets/Music/01_LOOP_MISSION.wav
+  artifactKey: Guid(b8cd2c66c491b664c893d8252b384494) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_zGameAssets/Music/01_LOOP_MISSION.wav using Guid(b8cd2c66c491b664c893d8252b384494) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8774c02a0513238856a062290f7f820a') in 0.021661 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/_zGameAssets/Music/01_LOOP_NOIR.wav
+  artifactKey: Guid(cb11b1c71da9ae54186f71d2e5b7f53c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_zGameAssets/Music/01_LOOP_NOIR.wav using Guid(cb11b1c71da9ae54186f71d2e5b7f53c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0b8b523b19d567bc4e71f5f7b5289de') in 0.034217 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/_zGameAssets/Music/02_ONE_SHOT_FANFARRE.wav
+  artifactKey: Guid(f997357832e083643b5f3c7b4b3c1e33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_zGameAssets/Music/02_ONE_SHOT_FANFARRE.wav using Guid(f997357832e083643b5f3c7b4b3c1e33) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17ed86eea617426fcbc73bc03d078a1d') in 0.014934 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

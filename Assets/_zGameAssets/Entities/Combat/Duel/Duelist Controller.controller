@@ -788,7 +788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: 
-  attackDamage: 10
+  attackDamage: 15
   knockbackStrength: 4
   heavyAttack: 1
 --- !u!1101 &1398682052877503091
@@ -919,7 +919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: 
-  attackDamage: 4
+  attackDamage: 10
   knockbackStrength: 3
   heavyAttack: 0
 --- !u!114 &4289474942578861560
@@ -935,7 +935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: 
-  attackDamage: 2
+  attackDamage: 10
   knockbackStrength: 2
   heavyAttack: 0
 --- !u!114 &5129040601691134477
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destination: 
-  attackDamage: 2
+  attackDamage: 10
   knockbackStrength: 1
   heavyAttack: 0
 --- !u!114 &6222882527838168499

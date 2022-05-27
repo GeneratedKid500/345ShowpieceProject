@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6289882429464630083}
   - component: {fileID: 6982265161809321190}
   - component: {fileID: 5116382068282632236}
-  - component: {fileID: -7477637349313996878}
   - component: {fileID: 6666179541939554657}
   - component: {fileID: 1293657194833036594}
   m_Layer: 0
@@ -86,24 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-7477637349313996878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6629850683996998137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ac922c921c423444927e70081e004fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponName: War Axe
-  weaponDesc: Practical for cutting down trees
-  weaponPrefab: {fileID: 6629850683996998137}
-  weaponRenderer: {fileID: 5116382068282632236}
-  weapon: {fileID: 0}
-  weaponSlot: 0
 --- !u!65 &6666179541939554657
 BoxCollider:
   m_ObjectHideFlags: 0

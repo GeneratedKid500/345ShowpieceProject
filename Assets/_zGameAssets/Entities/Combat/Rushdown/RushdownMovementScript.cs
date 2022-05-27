@@ -48,6 +48,12 @@ public class RushdownMovementScript : EnemyMovement
     }
 
     public void SetAttacking(bool val) => attacking = val;
+
+
+    private void OnDisable()
+    {
+        GameObject.FindGameObjectWithTag("SpawnPoint").GetComponentInParent<SpawnManager>().RemoveFromList(gameObject);
+    }
 }
 
 #if UNITY_EDITOR

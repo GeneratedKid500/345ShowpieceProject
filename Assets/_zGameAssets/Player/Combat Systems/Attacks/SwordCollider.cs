@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SwordCollider : MonoBehaviour
 {
+    [SerializeField] bool isOnPlayer;
     [SerializeField] Transform root;
 
     [SerializeField] Collider coll;
@@ -15,9 +16,13 @@ public class SwordCollider : MonoBehaviour
     private int attackDamage;
     private bool isHeavy;
 
+    bool stop;
+    float stopTime = 0.05f;
+
     private void Start()
     {
         root = transform.root;
+        if (root.tag == "Player") isOnPlayer = true;
 
         targetsHit = new List<HealthSystem>();
 
@@ -42,7 +47,22 @@ public class SwordCollider : MonoBehaviour
             Debug.Log(target.transform.root.name);
             targetsHit.Add(target);
             target.TakeDamage(root, attackKnockbackStrength, attackDamage, isHeavy);
+            if (isOnPlayer && !stop)
+            {
+                stop = false;
+                Time.timeScale = 0;
+
+                StartCoroutine("ReturnTimeScale");
+            }
         }
+    }
+
+    System.Collections.IEnumerator ReturnTimeScale()
+    {
+        yield return new WaitForSecondsRealtime(stopTime);
+
+        Time.timeScale = 1;
+        stop = false;
     }
 
     public void ApplyStats(int atkdmg, float atkKnbckStr, bool heavy)

@@ -12,6 +12,7 @@ public class PlayerMainStateManager : MonoBehaviour
     public bool grounded = false;
     public bool sprinting = false;
 
+    private Rigidbody rb;
     private RagdollOnOff rgd;
     private PlayerActionDistributor ad;
     private WeaponLoader wLoader;
@@ -83,7 +84,7 @@ public class PlayerMainStateManager : MonoBehaviour
 
     void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
         freeCam.gameObject.SetActive(false);
     }
 
@@ -168,6 +169,7 @@ public class PlayerMainStateManager : MonoBehaviour
             {
                 wLoader.FadeOutWeapon();
                 tpc.EnableCharacter();
+                tpc.SetRotation(true);
             }
 
             // enables regular camera

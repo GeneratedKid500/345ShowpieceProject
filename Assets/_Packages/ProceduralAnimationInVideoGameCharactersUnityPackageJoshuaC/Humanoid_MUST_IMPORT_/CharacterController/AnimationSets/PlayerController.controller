@@ -242,13 +242,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: -203655887218126122, guid: 5167c0f5d4974d7458811dd6fb211d7c, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: ATTACK_ANIMATION_SPEED_MULTIPLIER
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -442,13 +442,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 2064677612914804057, guid: e55065b8196e61943a891c00244b609a, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: ATTACK_ANIMATION_SPEED_MULTIPLIER
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -623,13 +623,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 1
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 5480843336852827920, guid: e55065b8196e61943a891c00244b609a, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: ATTACK_ANIMATION_SPEED_MULTIPLIER
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -2355,13 +2355,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 5480843336852827920, guid: e55065b8196e61943a891c00244b609a, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: ATTACK_ANIMATION_SPEED_MULTIPLIER
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -2611,13 +2611,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 2064677612914804057, guid: e55065b8196e61943a891c00244b609a, type: 3}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: ATTACK_ANIMATION_SPEED_MULTIPLIER
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

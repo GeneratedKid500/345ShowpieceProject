@@ -22,4 +22,9 @@ public class UI_Sticky : MonoBehaviour
     {
         transform.position = pos;
     }
+
+    private void LateUpdate()
+    {
+        transform.position = pos;
+    }
 }

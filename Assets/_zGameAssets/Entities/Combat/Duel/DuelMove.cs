@@ -5,6 +5,8 @@ using UnityEditor;
 
 public class DuelMove : EnemyMovement
 {
+    [HideInInspector] public bool hasBeenKilled = false;
+
     [Header("Duelist Variables")]
     [SerializeField] private float stoppingDistance2 = 1.5f;
     [SerializeField] private float timeBetweenAttacks = 1f;
@@ -32,7 +34,11 @@ public class DuelMove : EnemyMovement
             agent.isStopped = false;
             RotateToTarget(currentTarget, 15);
 
-            if (newMoveDir != null) agent.SetDestination(newMoveDir);
+            if (newMoveDir != null)
+            {
+                agent.SetDestination(newMoveDir);
+                AlterSpeed(Vector3.Distance(transform.position, newMoveDir));
+            }
             else agent.SetDestination(transform.position);
 
             timeSinceNewMove += Time.fixedDeltaTime;
@@ -85,6 +91,12 @@ public class DuelMove : EnemyMovement
 
             anim.SetFloat("Targeting", 0);
         }
+    }
+
+    private void OnDisable()
+    {
+        hasBeenKilled = true;
+        GameObject.FindGameObjectWithTag("SpawnPoint").GetComponentInParent<DuelEnemyManager>().DuelEnemyDefeated(this.gameObject);
     }
 }
 

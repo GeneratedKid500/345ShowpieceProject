@@ -11,6 +11,10 @@ public class PlayerHealthBarManager : MonoBehaviour
     [SerializeField] CanvasGroup deadHPWarning;
     HealthSystem playerHP;
 
+    [Header("Weapon Switch Icon")]
+    [SerializeField] CanvasGroup weaponSwitch;
+    [SerializeField] TextMeshProUGUI text;
+
     private void Start()
     {
         playerHP = GameObject.FindWithTag("Player").GetComponent<HealthSystem>();
@@ -29,10 +33,21 @@ public class PlayerHealthBarManager : MonoBehaviour
             lowHPWarning.alpha = Mathf.Lerp(lowHPWarning.alpha, 0, Time.deltaTime*2);
         }
 
+        if (weaponSwitch.alpha > 1)
+        {
+            weaponSwitch.alpha = Mathf.Lerp(lowHPWarning.alpha, 0, Time.deltaTime/2);
+        }
+
         if (playerHP.GetHP() <= 0)
         {
             healthBarSlider.fillRect.gameObject.SetActive(false);
             deadHPWarning.alpha = Mathf.Lerp(lowHPWarning.alpha, 1, Time.deltaTime);
         }
+    }
+
+    public void AlterTextShowButton(string newText)
+    {
+        text.text = newText;
+        weaponSwitch.alpha = 1;
     }
 }

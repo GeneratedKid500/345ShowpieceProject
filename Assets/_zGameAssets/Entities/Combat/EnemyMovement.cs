@@ -14,7 +14,7 @@ public abstract class EnemyMovement : MonoBehaviour
     protected RagdollOnOff roo;
 
     [SerializeField] protected bool randomNavigation;
-    protected Transform[] allWaypoints;
+    [SerializeField] protected Transform[] allWaypoints;
     protected int pointer = 0;
 
     [SerializeField] protected LayerMask detectionLayer;
@@ -65,7 +65,6 @@ public abstract class EnemyMovement : MonoBehaviour
     protected void Start()
     {
         enableMove = true;
-
         GetAllWaypoints();
         NextWaypoint();
     }
@@ -170,13 +169,16 @@ public abstract class EnemyMovement : MonoBehaviour
     #region Navigation - GetAllWaypoints, NextWaypoint, MoveToWaypoint, MoveToTarget, AlterSpeed
     protected void GetAllWaypoints()
     {
-        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
-        allWaypoints = new Transform[waypoints.Length];
-        for (int i = 0; i < waypoints.Length; i++)
+        if (allWaypoints.Length == 0)
         {
-            allWaypoints[i] = waypoints[i].transform;
+            GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
+            allWaypoints = new Transform[waypoints.Length];
+            for (int i = 0; i < waypoints.Length; i++)
+            {
+                allWaypoints[i] = waypoints[i].transform;
+            }
+            pointer = 0;
         }
-        pointer = 0;
     }
 
     protected void NextWaypoint(Transform tOverride = null)

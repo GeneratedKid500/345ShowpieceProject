@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 956734982}
   - component: {fileID: 956734985}
   - component: {fileID: 956734986}
+  - component: {fileID: 6231643074076154533}
   m_Layer: 10
   m_Name: Swarm Enemy
   m_TagString: Swarm
@@ -127,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onPlayer: 0
+  timeUntilRemoveAtDeath: 2
   health: 20
 --- !u!114 &956734985
 MonoBehaviour:
@@ -142,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableMove: 1
   randomNavigation: 1
+  allWaypoints: []
   detectionLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -181,6 +184,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6231643074076154533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201175711973034043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9708fdfd1d745444bb234879d2105469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPickup: {fileID: 1000010714891294, guid: 5a0537415d4017c4fad7a4986f502dc1, type: 3}
 --- !u!1001 &7012948055625675588
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class PlayerActionDistributor : MonoBehaviour
     public bool attacking;
     public bool canInput;
 
+    private PlayerHealthBarManager healthBarManager;
     private PlayerMainStateManager pmsm;
     private WeaponLoader weaponLoader;
     private Transform cam;
@@ -51,6 +52,7 @@ public class PlayerActionDistributor : MonoBehaviour
 
     private void Start()
     {
+        healthBarManager = GameObject.Find("PlayerHealthCanvas").GetComponent<PlayerHealthBarManager>();
         pmsm = GetComponent<PlayerMainStateManager>();
         cam = Camera.main.transform;
         anim = GetComponentInChildren<Animator>();
@@ -313,6 +315,7 @@ public class PlayerActionDistributor : MonoBehaviour
                 if (weapon2)
                 {
                     currentWeapon = 1;
+                    healthBarManager.AlterTextShowButton("Axe");
                 }
                 else if (weapon3)
                 {
@@ -328,6 +331,7 @@ public class PlayerActionDistributor : MonoBehaviour
                 else
                 {
                     currentWeapon = 0;
+                    healthBarManager.AlterTextShowButton("Greatsword");
                 }
                 break;
 

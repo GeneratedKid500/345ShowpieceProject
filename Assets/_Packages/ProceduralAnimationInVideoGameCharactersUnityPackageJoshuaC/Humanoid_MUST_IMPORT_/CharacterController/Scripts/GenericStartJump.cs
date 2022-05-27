@@ -29,6 +29,7 @@ public class GenericStartJump : MonoBehaviour
             Vector3 deltaPos = anim.deltaPosition;
             if (pmsm.attacking || pmsm.hurt)
             {
+                fpControl.GetComponent<Rigidbody>().velocity = new Vector3(0, fpControl.GetComponent<Rigidbody>().velocity.y, 0);
                 transform.parent.rotation = anim.rootRotation;
                 deltaPos.y = 0f;
                 transform.parent.position += deltaPos;

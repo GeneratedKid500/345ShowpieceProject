@@ -33,20 +33,16 @@ public class WeaponStore : MonoBehaviour
 
     public void DissolveOut()
     {
-        if (currentDissolve != -1)
-        {
-            currentDissolve = (float)Math.Round(currentDissolve = Mathf.Lerp(currentDissolve, 1, 2 * Time.deltaTime), 3);
-            weaponRenderer.sharedMaterial.SetFloat("_Dissolve", currentDissolve);
-        }
+        Debug.Log("DissolveOutCall");
+        currentDissolve = (float)Math.Round(currentDissolve = Mathf.Lerp(currentDissolve, 1, 2 * Time.deltaTime), 3);
+        weaponRenderer.sharedMaterial.SetFloat("_Dissolve", currentDissolve);
     }
 
     public void DissolveIn()
     {
-        if (currentDissolve != -1)
-        {
-            currentDissolve = (float)Math.Round(currentDissolve = Mathf.Lerp(currentDissolve, 0, 2 * Time.deltaTime), 3);
-            weaponRenderer.sharedMaterial.SetFloat("_Dissolve", currentDissolve);
-        }
+        Debug.Log("DissolveInCall");
+        currentDissolve = (float)Math.Round(currentDissolve = Mathf.Lerp(currentDissolve, 0, 2 * Time.deltaTime), 3);
+        weaponRenderer.sharedMaterial.SetFloat("_Dissolve", currentDissolve);
     }
 
     public void DissolveOverride(int val)

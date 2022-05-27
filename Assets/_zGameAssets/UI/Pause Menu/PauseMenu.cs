@@ -24,7 +24,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] string pauseButton1;
     [SerializeField] string pauseButton2;
 
-    
+    private void Awake()
+    {
+        DoClothes();
+    }
 
     void Start()
     {
@@ -49,6 +52,9 @@ public class PauseMenu : MonoBehaviour
 
                 menu.SetActive(true);
                 Time.timeScale = 0;
+
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
             }
         }
     }
@@ -66,12 +72,18 @@ public class PauseMenu : MonoBehaviour
         menu.SetActive(false);
         Time.timeScale = 1;
 
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+
         pmsm.RestartAnimator();
     }
 
     public void ExitGame()
     {
         // save
+        SaveDataGatherer sdg = new SaveDataGatherer();
+        SaveSystem.SavePlayer(sdg);
 
         Application.Quit();
     }
@@ -102,6 +114,70 @@ public class PauseMenu : MonoBehaviour
         }
         activeWindow.SetActive(true);
         SetNewStartPoint(activeFirst);
+    }
+
+    void DoClothes()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        Transform player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().transform;
+
+        SkinnedMeshRenderer[] bodyParts = new SkinnedMeshRenderer[0];
+        bodyParts = player.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+        List<SkinnedMeshRenderer> heads = new List<SkinnedMeshRenderer>();
+        List<SkinnedMeshRenderer> body = new List<SkinnedMeshRenderer>();
+        List<SkinnedMeshRenderer> legs = new List<SkinnedMeshRenderer>();
+        List<SkinnedMeshRenderer> feet = new List<SkinnedMeshRenderer>();
+
+        foreach (SkinnedMeshRenderer part in bodyParts)
+        {
+            if (part.name.Contains("Head"))
+            {
+                heads.Add(part);
+            }
+            else if (part.name.Contains("Body"))
+            {
+                body.Add(part);
+            }
+            else if (part.name.Contains("Legs"))
+            {
+                legs.Add(part);
+            }
+            else if (part.name.Contains("Feet"))
+            {
+                feet.Add(part);
+            }
+            part.gameObject.SetActive(false);
+        }
+
+        int[] currentBodyParts = new int[4];
+        try
+        {
+            currentBodyParts = data.clothes;
+
+            heads[currentBodyParts[0]].gameObject.SetActive(true);
+            body[currentBodyParts[1]].gameObject.SetActive(true);
+            legs[currentBodyParts[2]].gameObject.SetActive(true);
+            feet[currentBodyParts[3]].gameObject.SetActive(true);
+        }
+        catch
+        {
+            currentBodyParts = new int[4] { 0, 0, 0, 0 };
+
+            heads[currentBodyParts[0]].gameObject.SetActive(true);
+            body[currentBodyParts[1]].gameObject.SetActive(true);
+            legs[currentBodyParts[2]].gameObject.SetActive(true);
+            feet[currentBodyParts[3]].gameObject.SetActive(true);
+        }
+
+        foreach (SkinnedMeshRenderer parts in bodyParts)
+        {
+            if (parts.gameObject == null || parts.gameObject.activeSelf == false)
+            {
+                Destroy(parts.gameObject);
+            }
+        }
     }
 
 

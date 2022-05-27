@@ -33,14 +33,12 @@ public class WeaponStore : MonoBehaviour
 
     public void DissolveOut()
     {
-        Debug.Log("DissolveOutCall");
         currentDissolve = (float)Math.Round(currentDissolve = Mathf.Lerp(currentDissolve, 1, 2 * Time.deltaTime), 3);
         weaponRenderer.sharedMaterial.SetFloat("_Dissolve", currentDissolve);
     }
 
     public void DissolveIn()
     {
-        Debug.Log("DissolveInCall");
         currentDissolve = (float)Math.Round(currentDissolve = Mathf.Lerp(currentDissolve, 0, 2 * Time.deltaTime), 3);
         weaponRenderer.sharedMaterial.SetFloat("_Dissolve", currentDissolve);
     }

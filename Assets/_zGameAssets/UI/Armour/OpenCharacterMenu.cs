@@ -21,9 +21,12 @@ public class OpenCharacterMenu : MonoBehaviour
         if (player == null) player = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().transform;
         if (currentBodyParts == null)
         {
-            // retrieve current body parts
-
+            PlayerData data = SaveSystem.LoadPlayer();
             currentBodyParts = new int[4] { 0, 0, 0, 0 };
+            if (data != null && data.clothes != null)
+            {
+                currentBodyParts = new int[4] { data.clothes[0], data.clothes[1], data.clothes[2], data.clothes[3] };
+            }
         }
 
         DestroyImmediate(model);
@@ -68,10 +71,21 @@ public class OpenCharacterMenu : MonoBehaviour
 
         player.GetComponentInParent<WeaponLoader>().ReAssignWeaponSlots();
 
-        heads[currentBodyParts[0]].gameObject.SetActive(true);
-        body[currentBodyParts[1]].gameObject.SetActive(true);
-        legs[currentBodyParts[2]].gameObject.SetActive(true);
-        feet[currentBodyParts[3]].gameObject.SetActive(true);
+        try
+        {
+            heads[currentBodyParts[0]].gameObject.SetActive(true);
+            body[currentBodyParts[1]].gameObject.SetActive(true);
+            legs[currentBodyParts[2]].gameObject.SetActive(true);
+            feet[currentBodyParts[3]].gameObject.SetActive(true);
+        }
+        catch
+        {
+            heads[0].gameObject.SetActive(true);
+            body[0].gameObject.SetActive(true);
+            legs[0].gameObject.SetActive(true);
+            feet[0].gameObject.SetActive(true);
+        }
+
     }
 
     private void OnDisable()
@@ -85,6 +99,7 @@ public class OpenCharacterMenu : MonoBehaviour
             }
         }
         player.gameObject.SetActive(true);
+        player.GetComponentInParent<PlayerMainStateManager>().StoreCostume(currentBodyParts);
     }
 
     private void Update()

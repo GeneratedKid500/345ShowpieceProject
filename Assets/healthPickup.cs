@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class healthPickup : MonoBehaviour
 {
-
     [SerializeField] int healAmount;
     HealthSystem playerHealth;
 

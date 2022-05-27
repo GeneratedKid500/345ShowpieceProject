@@ -1,19 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DuelEnemyManager : MonoBehaviour
 {
     GameObject[] duelEnemies;
-    bool[] isDefeated; 
+    bool[] isDefeated;
+
+    private void Awake()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+        if (data != null) isDefeated = data.bossesKilled;
+    }
 
     void Start()
     {
         duelEnemies = GameObject.FindGameObjectsWithTag("Duel");
-        isDefeated = new bool[duelEnemies.Length];
-        for (int i = 0; i < isDefeated.Length; i++)
+        if (isDefeated == null || isDefeated.Length < 0)
         {
-            isDefeated[i] = false;
+            isDefeated = new bool[duelEnemies.Length];
+
+            for (int i = 0; i < isDefeated.Length; i++)
+            {
+                isDefeated[i] = false;
+            }
+        }
+        else
+        {
+            for(int i = 0; i < duelEnemies.Length; i++)
+            {
+                if (isDefeated[i]) Destroy(duelEnemies[i]);
+            }
         }
     }
 
@@ -33,6 +48,11 @@ public class DuelEnemyManager : MonoBehaviour
             if (!isDefeated[i]) return;
         }
 
-        // Game Win
+        UnityEngine.SceneManagement.SceneManager.LoadScene("FinalScene");
+    }
+
+    public bool[] getDuelBossesDown()
+    {
+        return isDefeated;
     }
 }

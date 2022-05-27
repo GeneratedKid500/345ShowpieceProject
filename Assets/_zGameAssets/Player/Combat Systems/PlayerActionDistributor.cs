@@ -50,6 +50,15 @@ public class PlayerActionDistributor : MonoBehaviour
     bool waitingForTransition = false;
     string animationToTransitionInto = null;
 
+    private void Awake()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+        if (data != null)
+        {
+            weapon2 = data.weapon2;
+        }
+    }
+
     private void Start()
     {
         healthBarManager = GameObject.Find("PlayerHealthCanvas").GetComponent<PlayerHealthBarManager>();
@@ -350,6 +359,11 @@ public class PlayerActionDistributor : MonoBehaviour
             weapon2 = true;
         }
         else weapon3 = true;
+    }
+
+    public bool isWeapon2()
+    {
+        return weapon2;
     }
 
     public void DisableAttack()

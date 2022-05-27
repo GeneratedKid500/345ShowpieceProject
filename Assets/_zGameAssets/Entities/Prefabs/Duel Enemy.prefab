@@ -4119,6 +4119,7 @@ GameObject:
   - component: {fileID: 1433569141}
   - component: {fileID: 1433569144}
   - component: {fileID: 1433569145}
+  - component: {fileID: -6922026885522364688}
   m_Layer: 10
   m_Name: Duel Enemy
   m_TagString: Duel
@@ -4185,6 +4186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onPlayer: 0
+  timeUntilRemoveAtDeath: 2
   health: 150
 --- !u!114 &1433569141
 MonoBehaviour:
@@ -4215,6 +4217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableMove: 1
   randomNavigation: 0
+  allWaypoints: []
   detectionLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -4231,6 +4234,7 @@ MonoBehaviour:
   runSpeed: 6
   speedChangeSpeed: 5
   rotationSpeed: 15
+  hasBeenKilled: 0
   stoppingDistance2: 1
   timeBetweenAttacks: 1
   timeBetweenMoves: 0.5
@@ -4256,6 +4260,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-6922026885522364688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093961426329700467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9708fdfd1d745444bb234879d2105469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPickup: {fileID: 1000010714891294, guid: 5a0537415d4017c4fad7a4986f502dc1, type: 3}
 --- !u!1 &9196681453571460308
 GameObject:
   m_ObjectHideFlags: 0

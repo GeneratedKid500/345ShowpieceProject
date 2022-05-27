@@ -41,6 +41,17 @@ public class PlayerMainStateManager : MonoBehaviour
 
     private void Awake()
     {
+        PlayerData data = SaveSystem.LoadPlayer();
+        if (data != null)
+        {
+            Vector3 pos = new Vector3(data.pos[0], data.pos[1], data.pos[2]);
+            Quaternion rot = new Quaternion(data.rot[0], data.rot[1], data.rot[2], data.rot[3]);
+
+            transform.position = pos;
+            transform.rotation = rot;
+        }
+
+
         anim = GetComponentInChildren<Animator>();
         if (anim != null)
         {
@@ -265,5 +276,17 @@ public class PlayerMainStateManager : MonoBehaviour
 
         anim.gameObject.SetActive(false);
         anim.gameObject.SetActive(true);
+    }
+
+    int[] costume;
+
+    public void StoreCostume(int[] costume)
+    {
+        this.costume = costume;
+    }
+
+    public int[] extractCostume()
+    {
+        return costume;
     }
 }
